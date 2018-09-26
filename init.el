@@ -7,13 +7,18 @@
 ;; just comment it out by adding a semicolon to the start of the line.
 ;; You may delete these explanatory comments.
 (package-initialize)
+
+(require 'use-package)
+(package-install 'use-package)
+(setq inhibit-splash-screen t)
+
+
 (use-package exec-path-from-shell
   :ensure t
   :config
  (when (memq window-system '(mac ns x))
    (exec-path-from-shell-initialize)
    (exec-path-from-shell-copy-env "GOPATH")))
-
 
 
 
@@ -25,7 +30,6 @@
 	(package-refresh-contents)
 	(package-install 'use-package))
 
-(require 'use-package)
 (use-package yasnippet
   :ensure t
   :config
@@ -81,10 +85,15 @@
   (which-key-mode 1))
 
 ;;powerline
-(use-package powerline
-  :ensure t
-  :config
-  (powerline-vim-theme))
+;; (use-package powerline
+;;   :ensure t
+;;   :config
+;;   (powerline-vim-theme))
+
+(use-package doom-modeline
+      :ensure t
+      :defer t
+      :hook (after-init . doom-modeline-init))
 
 ;; keybinding
 (use-package general
@@ -98,6 +107,7 @@
 	   "ff" '(helm-find-files :which-key "find files")
 	   "bb" '(helm-buffers-list :which-key "buffers list")
 	   "kr" '(helm-show-kill-ring :which-key "kill ring")
+	   "gb" '(pop-tag-mark :which-key "goto back")
 
 	   "wl" '(windmove-right :which-key "move right")
 	   "wh" '(windmove-left :which-key "move left")
@@ -138,10 +148,11 @@
 (setq frame-title-format nil)
 
 ;; mini UI
-(scroll-bar-mode -1)
+(if (display-graphic-p)
+    (scroll-bar-mode -1)
+(menu-bar-mode   -1))
 (tool-bar-mode   -1)
 (tooltip-mode    -1)
-;;(menu-bar-mode   -1)
 
 ;; 补全
 (use-package company
@@ -180,7 +191,7 @@
  '(lsp-go-language-server-flags (quote ("-gocodecompletion" "-trace")))
  '(package-selected-packages
    (quote
-    (exec-path-from-shell auto-complete go-mode helm helm-ebdb))))
+    (doom-modeline helm-swoop gotest gotest\.el go-guru exec-path-from-shell auto-complete go-mode helm helm-ebdb))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

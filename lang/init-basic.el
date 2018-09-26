@@ -30,4 +30,10 @@
     (set-char-table-range composition-function-table (car char-regexp)
                           `([,(cdr char-regexp) 0 font-shape-gstring]))))
 
+;; 开启全局行号
+(global-linum-mode 1)
+
+;;最近文件
+(recentf-mode 1)
+
 (provide 'init-basic)
