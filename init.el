@@ -177,10 +177,17 @@
   (add-hook 'go-mode-hook #'lsp-go-enable))
 
 
+(use-package lsp-ui
+  :ensure t
+  :config
+  (add-hook 'lsp-mode-hook 'lsp-ui-mode))
+
+
 (require 'init-go)
 (require 'init-elisp)
 (require 'init-search)
 (require 'init-basic)
+(require 'init-region)
 
 
 (custom-set-variables
@@ -191,7 +198,7 @@
  '(lsp-go-language-server-flags (quote ("-gocodecompletion" "-trace")))
  '(package-selected-packages
    (quote
-    (doom-modeline helm-swoop gotest gotest\.el go-guru exec-path-from-shell auto-complete go-mode helm helm-ebdb))))
+    (lsp-ui doom-modeline helm-swoop gotest gotest\.el go-guru exec-path-from-shell auto-complete go-mode helm helm-ebdb))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
