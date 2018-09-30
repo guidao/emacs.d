@@ -18,8 +18,7 @@
 (defun m-get-overlay ()
   (if (null ov)
       (error "overlay is not set")
-    ov)
-  )
+    ov))
 
 (defun m-overlay-run (f)
   (delete-overlay ov)
@@ -30,17 +29,14 @@
    :states 'normal
    :keymaps 'local
    :prefix "SPC"
-   "mr" '(push-region :which-key "push region")
-   )
+   "mr" '(push-region :which-key "push region"))
 
 (defun replace-buffer-substring (start end str)
   "replace buffer substring"
   (kill-region start end)
   (save-excursion
     (goto-char start)
-    (insert str)
-    )
-  )
+    (insert str)))
 
 (provide 'init-region)
 
