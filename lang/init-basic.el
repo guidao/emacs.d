@@ -67,9 +67,6 @@
 (tooltip-mode    -1)
 
 
-
-
-
 ;; mac复制shell环境变量
 (use-package exec-path-from-shell
   :ensure t
@@ -82,7 +79,8 @@
 (use-package yasnippet
   :ensure t
   :config
-  (yas-global-mode 1))
+  (yas-global-mode 1)
+  (add-to-list 'yas-snippet-dirs "/Users/wangfeng/.emacs.d/snippets/yasnippet-go"))
 
 ;; evil mode
 (use-package evil
@@ -123,7 +121,7 @@
 	helm-autoresize-min-height 20)
   :config
   (helm-mode 1))
-
+(global-set-key (kbd "M-x") 'helm-M-x)
 
 ;; wich key
 (use-package which-key
@@ -182,29 +180,56 @@
   (add-hook 'after-init-hook 'global-company-mode))
 
 
-;; (use-package eglot
+(use-package eglot
+  :ensure t
+  :config
+  (add-to-list 'eglot-server-programs
+	       '(go-mode . ("go-langserver" "-mode=stdio" "-gocodecompletion"))))
+
+;; (use-package company-lsp
 ;;   :ensure t
 ;;   :config
-;;   (add-to-list 'eglot-server-programs
-;; 	       '(go-mode . ("go-langserver" "-mode=stdio" "-gocodecompletion"))))
-(use-package company-lsp
+;;   (push 'company-lsp company-backends))
+
+;; (use-package lsp-go
+;;   :ensure t
+;;   :config
+;;   (add-hook 'go-mode-hook #'lsp-go-enable))
+
+
+;; (use-package lsp-ui
+;;   :ensure t
+;;   :config
+;;   (add-hook 'lsp-mode-hook 'lsp-ui-mode))
+
+
+(use-package elfeed
   :ensure t
   :config
-  (push 'company-lsp company-backends))
+  (setq elfeed-feeds
+	'("http://planet.emacsen.org/atom.xml"
+	  "https://zhihu.com/rss"))
+  )
 
-(use-package lsp-go
+(use-package helm-projectile
   :ensure t
   :config
-  (add-hook 'go-mode-hook #'lsp-go-enable))
+  (helm-projectile-on)
+  (general-define-key
+   :states 'normal
+   :prefix "SPC"
+   "pf" '(helm-projectile-find-file :which-key "project find file")
+   ))
 
+(use-package json-mode
+  :ensure t
+  )
+(toggle-truncate-lines 1)
 
-(use-package lsp-ui
+(use-package hl-todo
   :ensure t
   :config
-  (add-hook 'lsp-mode-hook 'lsp-ui-mode))
-
-
-
+  (global-hl-todo-mode))
 
 
 (provide 'init-basic)
