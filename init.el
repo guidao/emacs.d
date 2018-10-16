@@ -26,7 +26,7 @@
 (require 'init-region)
 (require 'init-org)
 (require 'init-haskell)
-
+(require 'init-elixir)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
