@@ -70,4 +70,14 @@ It looks for archive files in /pkg/."
 	     ) it)))
 
 (fset 'go-packages-native 'my-go-packages-native)
+
+;; 使用company-go
+;; (use-package company-go
+;;   :ensure t
+;;   :config
+;;   (add-hook 'go-mode-hook (lambda ()
+;;                           (set (make-local-variable 'company-backends) '(company-go))
+;;                           (company-mode))))
+
+
 (provide 'init-go)

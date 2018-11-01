@@ -180,21 +180,26 @@
   (add-hook 'after-init-hook 'global-company-mode))
 
 
-(use-package eglot
+;; (use-package eglot
+;;   :ensure t
+;;   :config
+;;   (add-to-list 'eglot-server-programs
+;; 	       '(go-mode . ("go-langserver" "-mode=stdio" "-gocodecompletion"))))
+
+(use-package company-lsp
   :ensure t
   :config
-  (add-to-list 'eglot-server-programs
-	       '(go-mode . ("go-langserver" "-mode=stdio" "-gocodecompletion"))))
+  (push 'company-lsp company-backends))
 
-;; (use-package company-lsp
-;;   :ensure t
-;;   :config
-;;   (push 'company-lsp company-backends))
+(use-package lsp-rust
+  :ensure t)
 
-;; (use-package lsp-go
-;;   :ensure t
-;;   :config
-;;   (add-hook 'go-mode-hook #'lsp-go-enable))
+(use-package lsp-go
+  :ensure t
+  :config
+  (add-hook 'go-mode-hook #'lsp-go-enable)
+  (add-hook 'rust-mode-hook #'lsp-rust-enable)
+  (add-hook 'rust-mode-hook #'flycheck-mode))
 
 
 ;; (use-package lsp-ui
@@ -231,6 +236,39 @@
   :config
   (global-hl-todo-mode))
 
+
+
+(use-package avy
+  :ensure t
+  :config
+  (general-define-key
+   :states 'normal
+   :prefix "g"
+   "l" '(avy-goto-line :which-key "goto line")
+   "c" '(avy-goto-char :which-key "goto char")
+   )
+  )
+
+;;窗口管理
+(use-package eyebrowse
+  :ensure t
+  :config
+  (eyebrowse-mode t))
+
+
+;; 笔记管理
+(use-package deft
+  :ensure t
+  :config
+  (setq deft-extensions '("org" "txt" "md" "markdown" "text"))
+  (setq deft-default-extension "org")
+  )
+
+(use-package smartparens
+  :ensure t
+  :config
+  (require 'smartparens-config)
+  (smartparens-global-mode))
 
 (provide 'init-basic)
 ;;; init-basic ends here

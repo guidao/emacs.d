@@ -17,8 +17,6 @@
 (require 'use-package)
 (add-to-list 'load-path "~/.emacs.d/lang")
 
-
-
 (require 'init-basic)
 (require 'init-go)
 (require 'init-elisp)
@@ -27,6 +25,7 @@
 (require 'init-org)
 (require 'init-haskell)
 (require 'init-elixir)
+(require 'init-rust)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -39,7 +38,7 @@
  '(lsp-go-language-server-flags (quote ("-gocodecompletion" "-trace")))
  '(package-selected-packages
    (quote
-    (auto-complete hl-todo lsp-haskell json-mode helm-projectile elfeed idris-mode emms emms-setup lsp-ui doom-modeline helm-swoop gotest gotest\.el go-guru exec-path-from-shell go-mode helm helm-ebdb))))
+    (cargo smartparens smartparens-config company-go deft eyebrowse avy auto-complete hl-todo lsp-haskell json-mode helm-projectile elfeed idris-mode emms emms-setup lsp-ui doom-modeline helm-swoop gotest gotest\.el go-guru exec-path-from-shell go-mode helm helm-ebdb))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
