@@ -144,7 +144,7 @@
 	   :states '(normal visual insert emacs)
 	   :prefix "SPC"
 	   :non-normal-prefix "M-SPC"
-	   "TAB" '(switch-to-prev-buffer :which-key "previous buffer")
+	   "TAB" '(evil-switch-to-windows-last-buffer :which-key "previous buffer")
 	   "SPC" '(helm-M-x :which-key "M-x")
 	   "ff" '(helm-find-files :which-key "find files")
 	   "bb" '(helm-buffers-list :which-key "buffers list")
@@ -197,7 +197,7 @@
 (use-package lsp-go
   :ensure t
   :config
-  (add-hook 'go-mode-hook #'lsp-go-enable)
+  ;(add-hook 'go-mode-hook #'lsp-go-enable)
   (add-hook 'rust-mode-hook #'lsp-rust-enable)
   (add-hook 'rust-mode-hook #'flycheck-mode))
 
@@ -269,6 +269,9 @@
   :config
   (require 'smartparens-config)
   (smartparens-global-mode))
+
+(use-package shell-pop
+  :ensure t)
 
 (provide 'init-basic)
 ;;; init-basic ends here

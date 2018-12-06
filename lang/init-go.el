@@ -5,7 +5,13 @@
   :config
   (add-hook 'before-save-hook 'gofmt-before-save)
   (add-hook 'go-mode-hook 'init-go-mode-hook)
+  (add-hook 'go-mode-hook #'lsp-go-enable)
   )
+
+
+(defun go-install ()
+  "Exec shell command go install."
+  (when (eq major-mode 'go-mode) (async-shell-command "go install")))
 
 (use-package flycheck
   :ensure t
@@ -78,6 +84,23 @@ It looks for archive files in /pkg/."
 ;;   (add-hook 'go-mode-hook (lambda ()
 ;;                           (set (make-local-variable 'company-backends) '(company-go))
 ;;                           (company-mode))))
+
+
+;; golang 官方补全
+;; (require 'lsp-mode)
+;; (lsp-define-stdio-client
+;;  golsp-official
+;;  "go"
+;;  #'(lambda () default-directory)
+;;  `(,(executable-find "golsp"))
+;;  )
+
+;; (add-hook 'go-mode-hook #'golsp-official-enable)
+
+;;(require 'company-go)
+;;(add-hook 'go-mode-hook (lambda ()
+;;                         (set (make-local-variable 'company-backends) '(company-go))
+;;                        (company-mode)))
 
 
 (provide 'init-go)
