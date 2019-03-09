@@ -191,21 +191,19 @@
   :config
   (push 'company-lsp company-backends))
 
-(use-package lsp-rust
-  :ensure t)
-
-(use-package lsp-go
+(use-package lsp-mode
   :ensure t
   :config
-  ;(add-hook 'go-mode-hook #'lsp-go-enable)
-  (add-hook 'rust-mode-hook #'lsp-rust-enable)
-  (add-hook 'rust-mode-hook #'flycheck-mode))
+  (require 'lsp)
+  (require 'lsp-clients)
+  ;(add-hook 'prog-mode-hook 'lsp)
+  )
 
-
-;; (use-package lsp-ui
-;;   :ensure t
-;;   :config
-;;   (add-hook 'lsp-mode-hook 'lsp-ui-mode))
+(use-package lsp-ui
+  :ensure t
+  :config
+  ;(add-hook 'lsp-mode-hook 'lsp-ui-mode)
+  )
 
 
 (use-package elfeed
@@ -271,7 +269,31 @@
   (smartparens-global-mode))
 
 (use-package shell-pop
-  :ensure t)
+  :ensure t
+  :config
+  )
+
+(use-package multi-term
+  :ensure t
+  :config)
+
+(use-package protobuf-mode
+  :ensure t
+  :config)
+
+
+(defun my-json-reformat-string ()
+  (interactive)
+  (let* ((begin (region-beginning))
+	(end (region-end))
+	(f (buffer-substring-no-properties begin end))
+	(ff (format "%s" f)))
+    (delete-region begin end)
+    (goto-char begin)
+    (insert (json-reformat-from-string (car (read-from-string ff))))))
+
+
+
 
 (provide 'init-basic)
 ;;; init-basic ends here

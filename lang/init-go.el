@@ -5,17 +5,13 @@
   :config
   (add-hook 'before-save-hook 'gofmt-before-save)
   (add-hook 'go-mode-hook 'init-go-mode-hook)
-  (add-hook 'go-mode-hook #'lsp-go-enable)
+  (add-hook 'go-mode-hook 'lsp)
   )
 
 
-(defun go-install ()
-  "Exec shell command go install."
-  (when (eq major-mode 'go-mode) (async-shell-command "go install")))
-
-(use-package flycheck
-  :ensure t
-  :init (global-flycheck-mode))
+;; (use-package flycheck
+;;   :ensure t
+;;   :init (global-flycheck-mode))
 
 ;; (use-package flycheck-golangci-lint
 ;;   :ensure t
@@ -77,6 +73,9 @@ It looks for archive files in /pkg/."
 
 (fset 'go-packages-native 'my-go-packages-native)
 
+(setq lsp-clients-go-diagnostics-enabled nil)
+
+
 ;; 使用company-go
 ;; (use-package company-go
 ;;   :ensure t
@@ -101,6 +100,16 @@ It looks for archive files in /pkg/."
 ;;(add-hook 'go-mode-hook (lambda ()
 ;;                         (set (make-local-variable 'company-backends) '(company-go))
 ;;                        (company-mode)))
+
+;; (lsp-register-client
+;;  (make-lsp-client :new-connection (lsp-stdio-connection "gopls")
+;;                   :major-modes '(go-mode)
+;;                   :priority 0
+;;                   ;:initialization-options 'lsp-clients-go--make-init-options
+;;                   :server-id 'go-pls
+;;                   :library-folders-fn (lambda (_workspace)
+;;                                         lsp-clients-go-library-directories)))
+
 
 
 (provide 'init-go)

@@ -10,6 +10,7 @@
 ;; just comment it out by adding a semicolon to the start of the line.
 ;; You may delete these explanatory comments.
 (package-initialize)
+;(setq debug-on-error t)
 
 (unless (package-installed-p 'use-package)
 	(package-refresh-contents)
@@ -42,10 +43,18 @@
  '(elfeed-feeds
    (quote
     ("https://www.zhihu.com/rss" "http://planet.emacsen.org/atom.xml")))
+ '(lsp-eldoc-hook nil)
+ '(lsp-eldoc-render-all nil)
  '(lsp-go-language-server-flags (quote ("-gocodecompletion" "-trace")))
+ '(lsp-ui-doc-enable nil)
  '(package-selected-packages
    (quote
-    (cargo smartparens smartparens-config company-go deft eyebrowse avy auto-complete hl-todo lsp-haskell json-mode helm-projectile elfeed idris-mode emms emms-setup lsp-ui doom-modeline helm-swoop gotest gotest\.el go-guru exec-path-from-shell go-mode helm helm-ebdb))))
+    (protobuf-mode cargo smartparens smartparens-config company-go deft eyebrowse avy auto-complete hl-todo lsp-haskell json-mode helm-projectile elfeed idris-mode emms emms-setup lsp-ui doom-modeline helm-swoop gotest gotest\.el go-guru exec-path-from-shell go-mode helm helm-ebdb)))
+ '(shell-pop-shell-type
+   (quote
+    ("terminal" "*terminal*"
+     (lambda nil
+       (term shell-pop-term-shell))))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
