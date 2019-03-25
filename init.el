@@ -27,6 +27,7 @@
 (require 'init-haskell)
 (require 'init-elixir)
 (require 'init-rust)
+(require 'ra-emacs-lsp)
 
 (defun my-debug (prefix a)
   (message "---:%s:%s" prefix a)
@@ -43,10 +44,12 @@
  '(elfeed-feeds
    (quote
     ("https://www.zhihu.com/rss" "http://planet.emacsen.org/atom.xml")))
+ '(lsp-clients-go-server-args (quote ("-logfile=/Users/wangfeng/txt2.log" "-trace")))
  '(lsp-eldoc-hook nil)
  '(lsp-eldoc-render-all nil)
  '(lsp-go-language-server-flags (quote ("-gocodecompletion" "-trace")))
  '(lsp-ui-doc-enable nil)
+ '(lsp-use-native-json t)
  '(package-selected-packages
    (quote
     (protobuf-mode cargo smartparens smartparens-config company-go deft eyebrowse avy auto-complete hl-todo lsp-haskell json-mode helm-projectile elfeed idris-mode emms emms-setup lsp-ui doom-modeline helm-swoop gotest gotest\.el go-guru exec-path-from-shell go-mode helm helm-ebdb)))
