@@ -1,5 +1,9 @@
 
 
+(use-package edts
+  :ensure t
+  :config)
+
 (use-package elixir-mode
   :ensure t
   :config

@@ -17,6 +17,7 @@
 	(package-install 'use-package))
 (require 'use-package)
 (add-to-list 'load-path "~/.emacs.d/lang")
+(add-to-list 'load-path "~/.emacs.d/lang/lpy")
 
 (require 'init-basic)
 (require 'init-go)
@@ -27,6 +28,7 @@
 (require 'init-haskell)
 (require 'init-elixir)
 (require 'init-rust)
+(require 'init-python)
 (require 'ra-emacs-lsp)
 
 (defun my-debug (prefix a)
@@ -41,18 +43,27 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(company-lsp-cache-candidates nil)
+ '(ein:completion-backend (quote ein:use-company-backend))
  '(elfeed-feeds
    (quote
     ("https://www.zhihu.com/rss" "http://planet.emacsen.org/atom.xml")))
- '(lsp-clients-go-server-args (quote ("-logfile=/Users/wangfeng/txt2.log" "-trace")))
+ '(elpy-rpc-python-command "python3")
+ '(go-test-verbose t)
+ '(jedi:server-command
+   (quote
+    ("python3" "/Users/wangfeng/.emacs.d/elpa/jedi-core-20181207.1/jediepcserver.py")) nil nil "(\"python3\" \"/Users/wangfeng/.emacs.d/elpa/jedi-core-20181207.1/jediepcserver.pyß\")")
+ '(lsp-clients-go-server-args (quote ("-logfile=/Users/wangfeng/txt2.log")))
  '(lsp-eldoc-hook nil)
  '(lsp-eldoc-render-all nil)
  '(lsp-go-language-server-flags (quote ("-gocodecompletion" "-trace")))
  '(lsp-ui-doc-enable nil)
  '(lsp-use-native-json t)
+ '(org-babel-load-languages (quote ((emacs-lisp . t) (python . t))))
+ '(org-babel-python-command "python3")
+ '(org-startup-with-inline-images t)
  '(package-selected-packages
    (quote
-    (protobuf-mode cargo smartparens smartparens-config company-go deft eyebrowse avy auto-complete hl-todo lsp-haskell json-mode helm-projectile elfeed idris-mode emms emms-setup lsp-ui doom-modeline helm-swoop gotest gotest\.el go-guru exec-path-from-shell go-mode helm helm-ebdb)))
+    (ob-ipython elpy python-mode function-args semantic-directory protobuf-mode cargo smartparens smartparens-config company-go deft eyebrowse avy auto-complete hl-todo lsp-haskell json-mode helm-projectile elfeed idris-mode emms emms-setup lsp-ui doom-modeline helm-swoop gotest gotest\.el go-guru exec-path-from-shell go-mode helm helm-ebdb)))
  '(shell-pop-shell-type
    (quote
     ("terminal" "*terminal*"

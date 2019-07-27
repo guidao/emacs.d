@@ -71,44 +71,15 @@ It looks for archive files in /pkg/."
 		  )
 	     ) it)))
 
-(fset 'go-packages-native 'my-go-packages-native)
+
+
+(defun my-go-packages-function()
+  "Return a list of all Go packages, using `gopkgs'."
+  (sort (process-lines "gopkgs") #'string<))
+
+(setq go-packages-function 'my-go-packages-function)
 
 (setq lsp-clients-go-diagnostics-enabled nil)
-
-
-;; 使用company-go
-;; (use-package company-go
-;;   :ensure t
-;;   :config
-;;   (add-hook 'go-mode-hook (lambda ()
-;;                           (set (make-local-variable 'company-backends) '(company-go))
-;;                           (company-mode))))
-
-
-;; golang 官方补全
-;; (require 'lsp-mode)
-;; (lsp-define-stdio-client
-;;  golsp-official
-;;  "go"
-;;  #'(lambda () default-directory)
-;;  `(,(executable-find "golsp"))
-;;  )
-
-;; (add-hook 'go-mode-hook #'golsp-official-enable)
-
-;;(require 'company-go)
-;;(add-hook 'go-mode-hook (lambda ()
-;;                         (set (make-local-variable 'company-backends) '(company-go))
-;;                        (company-mode)))
-
-;; (lsp-register-client
-;;  (make-lsp-client :new-connection (lsp-stdio-connection "gopls")
-;;                   :major-modes '(go-mode)
-;;                   :priority 0
-;;                   ;:initialization-options 'lsp-clients-go--make-init-options
-;;                   :server-id 'go-pls
-;;                   :library-folders-fn (lambda (_workspace)
-;;                                         lsp-clients-go-library-directories)))
 
 
 

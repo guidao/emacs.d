@@ -281,6 +281,10 @@
   :ensure t
   :config)
 
+(use-package yaml-mode
+  :ensure t
+  :config)
+
 
 (defun my-json-reformat-string ()
   (interactive)
@@ -293,7 +297,16 @@
     (insert (json-reformat-from-string (car (read-from-string ff))))))
 
 
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((ipython . t)
+   (python . t)
+   ))
 
+;;org代码执行后显示图片
+(add-hook 'org-babel-after-execute-hook 'org-display-inline-images 'append)
+;; 执行不用询问
+(setq org-confirm-babel-evaluate nil)
 
 (provide 'init-basic)
 ;;; init-basic ends here
