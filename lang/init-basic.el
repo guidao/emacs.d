@@ -164,6 +164,19 @@
 
 	   "at" '(ansi-term :which-key "open terminal")))
 
+
+(add-hook 'c-mode-hook 'init-cc-mode)
+(defun init-cc-mode ()
+  (general-define-key
+   :states 'normal
+   :keymaps 'c-mode-map
+   :prefix "SPC"
+   "mgg" '(helm-gtags-find-tag :which-key "goto definition")
+   )
+)
+
+
+
 ;; project
 (use-package projectile
   :ensure t
@@ -285,6 +298,10 @@
   :ensure t
   :config)
 
+(use-package helm-gtags
+  :ensure t
+  :config)
+
 
 (defun my-json-reformat-string ()
   (interactive)
@@ -296,12 +313,6 @@
     (goto-char begin)
     (insert (json-reformat-from-string (car (read-from-string ff))))))
 
-
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '((ipython . t)
-   (python . t)
-   ))
 
 ;;org代码执行后显示图片
 (add-hook 'org-babel-after-execute-hook 'org-display-inline-images 'append)

@@ -49,6 +49,7 @@
     ("https://www.zhihu.com/rss" "http://planet.emacsen.org/atom.xml")))
  '(elpy-rpc-python-command "python3")
  '(go-test-verbose t)
+ '(gofmt-command "goimports")
  '(jedi:server-command
    (quote
     ("python3" "/Users/wangfeng/.emacs.d/elpa/jedi-core-20181207.1/jediepcserver.py")) nil nil "(\"python3\" \"/Users/wangfeng/.emacs.d/elpa/jedi-core-20181207.1/jediepcserver.pyß\")")

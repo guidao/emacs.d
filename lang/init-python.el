@@ -2,8 +2,8 @@
 
 (provide 'init-python)
 
-(use-package jedi
-  :ensure t)
+;;(use-package jedi
+;;  :ensure t)
 
 (defun my-compile ()
   "Use compile to run python programs"
@@ -22,6 +22,13 @@
   :ensure t
   :config)
 
+(org-babel-do-load-languages
+'org-babel-load-languages
+'((ipython . t)
+  (python . t)
+  ))
+
+
 
 
 ;;ein notebook
@@ -34,12 +41,24 @@
 
 (setq ein:use-auto-complete-superpack t)
 
-(use-package elpy
-  :ensure t
-  :init
-  (elpy-enable))
+;; (use-package elpy
+;;   :ensure t
+;;   :init
+;;   (elpy-enable))
 
-(define-key elpy-mode-map (kbd "C-c C-c") 'my-compile)
+(use-package lsp-python-ms
+  :ensure t
+  :hook (python-mode . (lambda ()
+                          (require 'lsp-python-ms)
+                          (lsp))))
+
+(setq lsp-python-ms-executable
+      "~/code/dotnet/python-language-server/output/bin/Release/Microsoft.Python.LanguageServer")
+    
+
+
+
+;; (define-key elpy-mode-map (kbd "C-c C-c") 'my-compile) 
 
 ;; (use-package function-args
 ;;   :ensure t)
@@ -62,7 +81,7 @@
 (setq python-shell-interpreter "ipython"
       python-shell-interpreter-args "-i --simple-prompt")
 
-(jedi:setup)
+;(jedi:setup)
 ;; (setq python-shell-interpreter "python3"
 ;;       python-shell-interpreter-args "")
 

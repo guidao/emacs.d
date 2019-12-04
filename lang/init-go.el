@@ -28,7 +28,8 @@
    :states 'normal
    :keymaps 'local
    :prefix "SPC"
-   "mgg" '(godef-jump :which-key "godef goto define")
+   ;; "mgg" '(godef-jump :which-key "godef goto define")
+   "mgg" '(lsp-find-definition :which-key "lsp goto define")
    "mia" '(go-import-add :which-key "package add")
    "mur" '(go-guru-referrers :which-key "guru referrers")
    "muj" '(go-guru-definition :which-key "guru definition")
@@ -36,12 +37,17 @@
    "mu<" '(go-guru-callers :which-key "guru callers")
    "mu>" '(go-guru-callees :which-key "guru callees")
    )
+  (setenv "GO111MODULE" "on")
   (setq tab-width 4))
+
+
 
 (global-set-key (kbd "M-n") 'company-capf)
 
 (with-eval-after-load 'evil
-  (evil-set-command-property 'godef-jump :jump t))
+  (evil-set-command-property 'godef-jump :jump t)
+  (evil-set-command-property 'helm-gtags-find-tag :jump t)
+  )
 
 
 ;; go-mod 的 go package add 太慢了，使用fd重现实现
