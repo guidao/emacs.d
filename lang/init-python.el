@@ -1,17 +1,16 @@
-
-
-(provide 'init-python)
+;;; init-python.el --- xxxx
+;;; Commentary:
+;;; Code:
 
 ;;(use-package jedi
 ;;  :ensure t)
 
 (defun my-compile ()
-  "Use compile to run python programs"
+  "Use compile to run python programs."
   (interactive)
   (compile (concat "python3 " (buffer-name))))
 
-(setq compilation-scroll-output t)
-
+(setq-default compilation-scroll-output t)
 
 (use-package python-mode
   :ensure t
@@ -39,7 +38,7 @@
   )
 
 
-(setq ein:use-auto-complete-superpack t)
+(setq-default ein:use-auto-complete-superpack t)
 
 ;; (use-package elpy
 ;;   :ensure t
@@ -58,7 +57,7 @@
 
 
 
-;; (define-key elpy-mode-map (kbd "C-c C-c") 'my-compile) 
+;; (define-key elpy-mode-map (kbd "C-c C-c") 'my-compile)
 
 ;; (use-package function-args
 ;;   :ensure t)
@@ -88,3 +87,6 @@
 
 ;(require 'lpy)
 
+(provide 'init-python)
+
+;;; init-python.el ends here

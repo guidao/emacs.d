@@ -1,6 +1,6 @@
-
-;; elisp
-
+;;; init-elisp.el --- xxxx
+;;; Commentary:
+;;; Code:
 (use-package elisp-slime-nav
   :ensure t
   :config
@@ -20,3 +20,5 @@
 
 
 (provide 'init-elisp)
+
+;;; init-elisp.el ends here

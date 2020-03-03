@@ -1,3 +1,7 @@
+;;; init-go.el --- xxxx
+;;; Commentary:
+;;; Code:
+
 ;; 设置字体
 (when (window-system)
   (set-frame-font "Fira Code"))
@@ -44,7 +48,6 @@
 (fset 'yes-or-no-p 'y-or-n-p)
 
 ;; matching parens
-(setq show-paren-delay 0)
 (show-paren-mode 1)
 (electric-pair-mode 1)
 
@@ -56,7 +59,7 @@
 ;; titlebar
 (add-to-list 'default-frame-alist '(ns-transparent-titlebar .t))
 (add-to-list 'default-frame-alist '(ns-appearance . dark))
-(setq ns-use-proxy-icon nil)
+;;(setq ns-use-proxy-icon nil)
 (setq frame-title-format nil)
 
 ;; mini UI
@@ -74,6 +77,11 @@
  (when (memq window-system '(mac ns x))
    (exec-path-from-shell-initialize)
    (exec-path-from-shell-copy-env "GOPATH")))
+
+
+(use-package magit
+  :ensure t
+  :config)
 
 ;; 开启yas
 (use-package yasnippet
@@ -105,7 +113,7 @@
 (use-package helm
   :ensure t
   :init
-  (setq helm-M-x-fuzzy-match t
+  (setq-default helm-M-x-fuzzy-match t
 	helm-mode-fuzzy-match t
 	helm-buffers-fuzzy-matching t
 	helm-recentf-fuzzy-match t
@@ -135,7 +143,13 @@
 (use-package doom-modeline
       :ensure t
       :defer t
-      :hook (after-init . doom-modeline-init))
+      :hook (after-init . doom-modeline-mode))
+
+;;flycheck
+(use-package flycheck
+  :ensure t
+  :init (global-flycheck-mode))
+
 
 ;; keybinding
 (use-package general
@@ -215,7 +229,7 @@
 (use-package lsp-ui
   :ensure t
   :config
-  ;(add-hook 'lsp-mode-hook 'lsp-ui-mode)
+  (add-hook 'lsp-mode-hook 'lsp-ui-mode)
   )
 
 
@@ -317,7 +331,20 @@
 ;;org代码执行后显示图片
 (add-hook 'org-babel-after-execute-hook 'org-display-inline-images 'append)
 ;; 执行不用询问
-(setq org-confirm-babel-evaluate nil)
+(setq-default org-confirm-babel-evaluate nil)
+
+;; 设置系统剪切板
+(unless (window-system)
+ (defun copy-from-osx ()
+  (shell-command-to-string "pbpaste"))
+ (defun paste-to-osx (text &optional push)
+  (let ((process-connection-type nil))
+    (let ((proc (start-process "pbcopy" "*Messages*" "pbcopy")))
+      (process-send-string proc text)
+      (process-send-eof proc))))
+ (setq interprogram-cut-function 'paste-to-osx)
+ (setq interprogram-paste-function 'copy-from-osx))
 
 (provide 'init-basic)
-;;; init-basic ends here
+
+;;; init-basic.el ends here

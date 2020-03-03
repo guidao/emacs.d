@@ -1,4 +1,6 @@
-
+;;; init-search.el --- xxxx
+;;; Commentary:
+;;; Code:
 
 (use-package helm-swoop
   :ensure t)
@@ -20,3 +22,5 @@
 
 
 (provide 'init-search)
+
+;;; init-search.el ends here

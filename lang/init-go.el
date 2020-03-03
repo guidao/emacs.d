@@ -1,17 +1,16 @@
+;;; init-go.el --- xxxx
+;;; Commentary:
+;;; Code:
 
-;; go mode
+
 (use-package go-mode
   :ensure t
   :config
   (add-hook 'before-save-hook 'gofmt-before-save)
   (add-hook 'go-mode-hook 'init-go-mode-hook)
-  (add-hook 'go-mode-hook 'lsp)
-  )
+  (add-hook 'go-mode-hook 'lsp))
 
 
-;; (use-package flycheck
-;;   :ensure t
-;;   :init (global-flycheck-mode))
 
 ;; (use-package flycheck-golangci-lint
 ;;   :ensure t
@@ -38,6 +37,7 @@
    "mu>" '(go-guru-callees :which-key "guru callees")
    )
   (setenv "GO111MODULE" "on")
+  (push 'go-golint flycheck-disabled-checkers)
   (setq tab-width 4))
 
 
@@ -50,43 +50,14 @@
   )
 
 
-;; go-mod 的 go package add 太慢了，使用fd重现实现
-(defun my-go-packages-native ()
-  "Return a list of all installed Go packages.
-It looks for archive files in /pkg/."
-  (sort
-   (delete-dups
-    (cl-mapcan
-     (lambda (topdir)
-       (let ((pkgdir (concat topdir "/pkg/")))
-	 (go-gackages pkgdir)
-         	 ))
-     (go-root-and-paths)))
-   #'string<))
-
-(defun go-gackages (topdir)
-  "Rewrite go-mod my-go-packages-native.
-
-   topdir is pkgdir"
-  (--> (shell-command-to-string (concat "fd -e a . " topdir))
-     (split-string it "\n")
-     (-map (lambda (str)
-	     (--> (string-remove-prefix topdir str)
-		  (string-trim-left it ".*?/")
-		  (string-remove-suffix ".a" it)
-		  )
-	     ) it)))
-
-
-
 (defun my-go-packages-function()
   "Return a list of all Go packages, using `gopkgs'."
   (sort (process-lines "gopkgs") #'string<))
 
 (setq go-packages-function 'my-go-packages-function)
 
-(setq lsp-clients-go-diagnostics-enabled nil)
-
 
 
 (provide 'init-go)
+
+;;; init-go.el ends here
