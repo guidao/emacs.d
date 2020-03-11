@@ -17,7 +17,6 @@
 	(package-install 'use-package))
 (require 'use-package)
 (add-to-list 'load-path "~/.emacs.d/lang")
-(add-to-list 'load-path "~/.emacs.d/lang/lpy")
 
 (require 'init-basic)
 (require 'init-go)
@@ -42,6 +41,9 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   (quote
+    ("15ba8081651869ec689c9004288bed79003de5b4ee9c51a9d4a208d9e3439706" "e47c0abe03e0484ddadf2ae57d32b0f29f0b2ddfe7ec810bd6d558765d9a6a6c" "a4b9eeeabde73db909e6b080baf29d629507b44276e17c0c411ed5431faf87dd" "a02836a5807a687c982d47728e54ff42a91bc9e6621f7fe7205b0225db677f07" "c6b93ff250f8546c7ad0838534d46e616a374d5cb86663a9ad0807fd0aeb1d16" "92d8a13d08e16c4d2c027990f4d69f0ce0833c844dcaad3c8226ae278181d5f3" default)))
  '(ein:completion-backend (quote ein:use-company-backend))
  '(elfeed-feeds
    (quote

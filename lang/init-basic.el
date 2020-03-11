@@ -107,7 +107,8 @@
 (use-package doom-themes
   :ensure t
   :config
-  (load-theme 'doom-molokai t))
+  ;;(load-theme 'doom-molokai t)
+  (load-theme 'doom-gruvbox t))
 
 ;; helm
 (use-package helm
