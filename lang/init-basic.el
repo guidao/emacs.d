@@ -328,6 +328,13 @@
     (insert (json-reformat-from-string (car (read-from-string ff))))))
 
 
+(defun org-insert-clipboard-image (&optional file)
+  (interactive "F")
+  (shell-command (concat "pngpaste " file))
+  (insert (concat "[[" file "]]"))
+  (org-display-inline-images))
+
+
 ;;org代码执行后显示图片
 (add-hook 'org-babel-after-execute-hook 'org-display-inline-images 'append)
 ;; 执行不用询问
