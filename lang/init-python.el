@@ -21,13 +21,16 @@
   :ensure t
   :config)
 
-(org-babel-do-load-languages
-'org-babel-load-languages
-'((ipython . t)
-  (python . t)
-  ))
+;; (org-babel-do-load-languages
+;; 'org-babel-load-languages
+;; '((ipython . t)
+;;   (python . t)
+;;   ))
 
 
+(use-package lpy
+  :ensure t
+  :config)
 
 
 ;;ein notebook
@@ -49,43 +52,21 @@
   :ensure t
   :hook (python-mode . (lambda ()
                           (require 'lsp-python-ms)
+			  (lpy-mode)
+			  (lispy-mode)
                           (lsp))))
 
 (setq lsp-python-ms-executable
-      "~/code/dotnet/python-language-server/output/bin/Release/Microsoft.Python.LanguageServer")
+      "~/code/python/python-language-server/output/bin/Release/Microsoft.Python.LanguageServer")
     
 
+(setq lispy-key-theme '(c-digit))
+(lispy-set-key-theme lispy-key-theme)
 
-
-;; (define-key elpy-mode-map (kbd "C-c C-c") 'my-compile)
-
-;; (use-package function-args
-;;   :ensure t)
-
-;; (use-package lispy
-;;   :ensure t)
-
-;; (setq
-;;  python-shell-interpreter "ipython"
-;;  python-shell-interpreter-args "--pylab"
-;;  python-shell-prompt-regexp "In \\[[0-9]+\\]: "
-;;  python-shell-prompt-output-regexp "Out\\[[0-9]+\\]: "
-;;  python-shell-completion-setup-code
-;;  "from IPython.core.completerlib import module_completion"
-;;  python-shell-completion-module-string-code
-;;  "';'.join(module_completion('''%s'''))\n"
-;;  python-shell-completion-string-code
-;;  "';'.join(get_ipython().Completer.all_completions('''%s'''))\n")
 
 (setq python-shell-interpreter "ipython"
       python-shell-interpreter-args "-i --simple-prompt")
-
-;(jedi:setup)
-;; (setq python-shell-interpreter "python3"
-;;       python-shell-interpreter-args "")
-
-
-;(require 'lpy)
+(setq lsp-python-ms-python-executable-cmd "python3")
 
 (provide 'init-python)
 

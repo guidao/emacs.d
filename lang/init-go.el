@@ -52,10 +52,11 @@
 
 (defun my-go-packages-function()
   "Return a list of all Go packages, using `gopkgs'."
-  (sort (process-lines "gopkgs") #'string<))
+  (sort (process-lines "gopkgs" "-workDir" ".") #'string<))
 
 (setq go-packages-function 'my-go-packages-function)
 
+(setq gofmt-command "goimports")
 
 
 (provide 'init-go)

@@ -4,7 +4,9 @@
 
 ;; 设置字体
 (when (window-system)
-  (set-frame-font "Fira Code"))
+  (set-frame-font "Fira Code")
+  (set-frame-font "iosevka 13")
+  )
 (let ((alist '((33 . ".\\(?:\\(?:==\\|!!\\)\\|[!=]\\)")
                (35 . ".\\(?:###\\|##\\|_(\\|[#(?[_{]\\)")
                (36 . ".\\(?:>\\)")
@@ -34,6 +36,8 @@
   (dolist (char-regexp alist)
     (set-char-table-range composition-function-table (car char-regexp)
                           `([,(cdr char-regexp) 0 font-shape-gstring]))))
+
+
 
 ;; 开启全局行号
 (global-linum-mode 1)
@@ -70,6 +74,24 @@
 (tooltip-mode    -1)
 
 
+(defun org-insert-image ()
+    (interactive)
+    (let* ((path (concat default-directory "img/"))
+		   (image-file (concat
+						path
+						(buffer-name)
+						(format-time-string "_%Y%m%d_%H%M%S.png"))))
+	  (if (not (file-exists-p path))
+		  (mkdir path))
+	  (shell-command (concat "pngpaste " image-file))
+	  (org-insert-link nil (concat "file:" image-file) ""))
+      ;; (org-display-inline-images) ;; inline显示图片
+	)
+
+
+(use-package org-download
+  :ensure t)
+
 ;; mac复制shell环境变量
 (use-package exec-path-from-shell
   :ensure t
@@ -88,7 +110,7 @@
   :ensure t
   :config
   (yas-global-mode 1)
-  (add-to-list 'yas-snippet-dirs "/Users/wangfeng/.emacs.d/snippets/yasnippet-go"))
+  (add-to-list 'yas-snippet-dirs "~/.emacs.d/snippets/yasnippet-go"))
 
 ;; evil mode
 (use-package evil
@@ -180,7 +202,6 @@
 	   "at" '(ansi-term :which-key "open terminal")))
 
 
-(add-hook 'c-mode-hook 'init-cc-mode)
 (defun init-cc-mode ()
   (general-define-key
    :states 'normal
@@ -189,6 +210,8 @@
    "mgg" '(helm-gtags-find-tag :which-key "goto definition")
    )
 )
+
+(add-hook 'c-mode-hook 'init-cc-mode)
 
 
 
@@ -256,6 +279,7 @@
   :ensure t
   )
 (toggle-truncate-lines 1)
+(setq-default truncate-lines t)
 
 (use-package hl-todo
   :ensure t
@@ -329,17 +353,34 @@
     (insert (json-reformat-from-string (car (read-from-string ff))))))
 
 
-(defun org-insert-clipboard-image (&optional file)
-  (interactive "F")
-  (shell-command (concat "pngpaste " file))
-  (insert (concat "[[" file "]]"))
-  (org-display-inline-images))
+;; (defun org-insert-clipboard-image (&optional file)
+;;   (interactive "F")
+;;   (shell-command (concat "pngpaste " file))
+;;   (insert (concat "[[" file "]]"))
+;;   (org-display-inline-images))
 
 
 ;;org代码执行后显示图片
 (add-hook 'org-babel-after-execute-hook 'org-display-inline-images 'append)
 ;; 执行不用询问
 (setq-default org-confirm-babel-evaluate nil)
+
+(setq company-idle-delay 0)
+
+
+(use-package lua-mode
+  :ensure t)
+
+(use-package helm-dash
+  :ensure t)
+
+
+(use-package vterm
+  :ensure t
+  :config
+  (evil-define-key* 'insert vterm-mode-map
+  (kbd "C-r") #'vterm--self-insert))
+
 
 ;; 设置系统剪切板
 (unless (window-system)
