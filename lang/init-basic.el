@@ -4,9 +4,10 @@
 
 ;; 设置字体
 (when (window-system)
-  (set-frame-font "Fira Code")
+  (set-frame-font "Fira Code 12")
   (set-frame-font "iosevka 13")
   )
+
 (let ((alist '((33 . ".\\(?:\\(?:==\\|!!\\)\\|[!=]\\)")
                (35 . ".\\(?:###\\|##\\|_(\\|[#(?[_{]\\)")
                (36 . ".\\(?:>\\)")
@@ -39,7 +40,35 @@
 
 
 
-;; 开启全局行号
+(use-package sis
+  :hook
+  ;; enable the /follow context/ and /inline region/ mode for specific buffers
+   (((text-mode prog-mode) . sis-follow-context-mode)
+   ((text-mode prog-mode) . sis-inline-mode))
+
+  :config
+  ;; For MacOS
+  (sis-ism-lazyman-config
+  
+   ;; English input source may be: "ABC", "US" or another one.
+   ;; "com.apple.keylayout.ABC"
+   "com.apple.keylayout.ABC"
+
+   ;; Other language input source: "rime", "sogou" or another one.
+   ;; "im.rime.inputmethod.Squirrel.Rime"
+   "com.sogou.inputmethod.sogou.pinyin")
+
+  ;; enable the /cursor color/ mode
+  (sis-global-cursor-color-mode t)
+  ;; enable the /respect/ mode
+  (sis-global-respect-mode t)
+  ;; enable the /follow context/ mode for all buffers
+  (sis-global-follow-context-mode t)
+  ;; enable the /inline english/ mode for all buffers
+  (sis-global-inline-mode t)
+)
+
+;;全局输入法
 (global-linum-mode 1)
 
 ;;最近文件
@@ -53,7 +82,8 @@
 
 ;; matching parens
 (show-paren-mode 1)
-(electric-pair-mode 1)
+;;TODO 这个开启很多地方会出问题
+;;(electric-pair-mode 1)
 
 ;; disable backup files
 (setq make-backup-files nil)
@@ -372,7 +402,10 @@
   :ensure t)
 
 (use-package helm-dash
-  :ensure t)
+  :ensure t
+  :config
+  (setq helm-dash-browser-func 'browse-url)
+  )
 
 
 (use-package vterm

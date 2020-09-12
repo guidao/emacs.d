@@ -21,11 +21,15 @@
   :ensure t
   :config)
 
-;; (org-babel-do-load-languages
-;; 'org-babel-load-languages
-;; '((ipython . t)
-;;   (python . t)
-;;   ))
+(use-package ob-go
+  :ensure t)
+
+(org-babel-do-load-languages
+'org-babel-load-languages
+'((ipython . t)
+  (python . t)
+  (go .t)
+  ))
 
 
 (use-package lpy
