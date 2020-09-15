@@ -2,6 +2,7 @@
 (use-package org
   :ensure t)
 
+(require 'deft)
 (setq org-agenda-files (list deft-directory))
 (setq org-default-notes-file (concat deft-directory "todo.org"))
 (setq org-image-actual-width nil)
@@ -15,16 +16,12 @@
 
 
 (require 'org-tempo)
+(require 'ox-ioslide-helper)
+(setq org-startup-indented t)
 
-;; (use-package evil-org
-;;   :ensure t
-;;   :after org
-;;   :config
-;;   (add-hook 'org-mode-hook 'evil-org-mode)
-;;   (add-hook 'evil-org-mode-hook
-;;             (lambda ()
-;;               (evil-org-set-key-theme)))
-;;   (require 'evil-org-agenda)
-;;   (evil-org-agenda-set-keys))
+(use-package org-bullets
+  :ensure t
+  :config
+  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 
 (provide 'init-org)

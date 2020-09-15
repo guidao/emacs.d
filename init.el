@@ -34,12 +34,6 @@
 (require 'valign)
 (require 'company-english-helper)
 
-(defun my-debug (prefix a)
-  (message "---:%s:%s" prefix a)
-  a
-  )
-
-
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -66,7 +60,7 @@
  '(org-babel-python-command "python3")
  '(org-startup-with-inline-images t)
  '(package-selected-packages
-   '(sis ob-go org-modules pdf-tools helm-rg go-playground vterm evil-org web-mode helm-dash evil-smartparens w3m lispyville lua-mode org-download php-mode ob-ipython elpy python-mode function-args semantic-directory protobuf-mode cargo smartparens smartparens-config company-go deft eyebrowse avy auto-complete hl-todo lsp-haskell json-mode helm-projectile elfeed idris-mode emms emms-setup lsp-ui doom-modeline helm-swoop gotest gotest\.el go-guru exec-path-from-shell go-mode helm helm-ebdb))
+   '(org-bullets htmlize ox-reveal ox-ioslide sis ob-go org-modules pdf-tools helm-rg go-playground vterm evil-org web-mode helm-dash evil-smartparens w3m lispyville lua-mode org-download php-mode ob-ipython elpy python-mode function-args semantic-directory protobuf-mode cargo smartparens smartparens-config company-go deft eyebrowse avy auto-complete hl-todo lsp-haskell json-mode helm-projectile elfeed idris-mode emms emms-setup lsp-ui doom-modeline helm-swoop gotest gotest\.el go-guru exec-path-from-shell go-mode helm helm-ebdb))
  '(shell-pop-shell-type '("vterm" "*vterm*" (lambda nil (vterm))))
  '(sp-ignore-modes-list '(minibuffer-inactive-mode protobuf-mode)))
 (custom-set-faces

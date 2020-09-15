@@ -5,7 +5,7 @@
 ;; 设置字体
 (when (window-system)
   (set-frame-font "Fira Code 12")
-  (set-frame-font "iosevka 13")
+  (set-frame-font "iosevka 15")
   )
 
 (let ((alist '((33 . ".\\(?:\\(?:==\\|!!\\)\\|[!=]\\)")
@@ -88,6 +88,10 @@
 ;; disable backup files
 (setq make-backup-files nil)
 (setq auto-save-default nil)
+
+(use-package ox-ioslide
+  :ensure t
+  :config)
 
 
 ;; titlebar
@@ -398,6 +402,9 @@
 (setq company-idle-delay 0)
 
 
+(setq default-directory "~/")
+
+
 (use-package lua-mode
   :ensure t)
 
@@ -405,6 +412,7 @@
   :ensure t
   :config
   (setq helm-dash-browser-func 'browse-url)
+  (mapc 'helm-dash-activate-docset (helm-dash-installed-docsets))
   )
 
 
