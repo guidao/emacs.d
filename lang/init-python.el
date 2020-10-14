@@ -24,13 +24,6 @@
 (use-package ob-go
   :ensure t)
 
-(org-babel-do-load-languages
-'org-babel-load-languages
-'((ipython . t)
-  (python . t)
-  (go .t)
-  ))
-
 
 (use-package lpy
   :ensure t
@@ -56,8 +49,8 @@
   :ensure t
   :hook (python-mode . (lambda ()
                           (require 'lsp-python-ms)
-			  (lpy-mode)
 			  (lispy-mode)
+			  (lpy-mode)
                           (lsp))))
 
 (setq lsp-python-ms-executable
