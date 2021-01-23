@@ -6,7 +6,7 @@
 (when (window-system)
   ;(set-frame-font "Fira Code 15")
   ;;(set-frame-font "iosevka 15")
-  (set-frame-font "Latin Modern Mono 17")
+  (set-frame-font "Latin Modern Mono 18")
   )
 
 (let ((alist '((33 . ".\\(?:\\(?:==\\|!!\\)\\|[!=]\\)")
@@ -39,6 +39,15 @@
     (set-char-table-range composition-function-table (car char-regexp)
                           `([,(cdr char-regexp) 0 font-shape-gstring]))))
 
+(use-package quelpa
+  :ensure t)
+
+(use-package quelpa-use-package
+  :ensure t
+  :config
+  (setq use-package-ensure-function 'quelpa))
+
+
 
 (use-package sis
   :hook
@@ -69,7 +78,7 @@
 )
 
 ;;全局行号
-(global-linum-mode 1)
+(global-display-line-numbers-mode 1)
 
 ;;最近文件
 (recentf-mode 1)
@@ -88,10 +97,7 @@
 (setq make-backup-files nil)
 (setq auto-save-default nil)
 
-(use-package ox-ioslide
-  :ensure t
-  :config)
-
+(setq-default left-fringe-width 0)
 
 ;; titlebar
 (add-to-list 'default-frame-alist '(ns-transparent-titlebar .t))
@@ -100,26 +106,24 @@
 (setq frame-title-format nil)
 
 ;; ;; mini UI
- (if (display-graphic-p)
-     (scroll-bar-mode -1)
+(if (display-graphic-p)
+  (scroll-bar-mode -1)
 (menu-bar-mode   -1))
 (tool-bar-mode   -1)
 (tooltip-mode    -1)
 
 
 (defun org-insert-image ()
-    (interactive)
-    (let* ((path (concat default-directory "img/"))
-		   (image-file (concat
-						path
-						(buffer-name)
-						(format-time-string "_%Y%m%d_%H%M%S.png"))))
+  (interactive)
+  (let* ((path (concat default-directory "img/"))
+	 (image-file (concat path (buffer-name)
+		       (format-time-string "_%Y%m%d_%H%M%S.png"))))
 	  (if (not (file-exists-p path))
-		  (mkdir path))
+	    (mkdir path))
 	  (shell-command (concat "pngpaste " image-file))
 	  (org-insert-link nil (concat "file:" image-file) ""))
       ;; (org-display-inline-images) ;; inline显示图片
-	)
+)
 
 
 (use-package org-download
@@ -142,8 +146,7 @@
 (use-package yasnippet
   :ensure t
   :config
-  (yas-global-mode 1)
-  (add-to-list 'yas-snippet-dirs "~/.emacs.d/snippets/yasnippet-go"))
+  (yas-global-mode 1))
 
 ;; evil mode
 (use-package evil
@@ -163,7 +166,9 @@
   :ensure t
   :config
   ;;(load-theme 'doom-molokai t)
-  (load-theme 'doom-gruvbox t))
+  (load-theme 'doom-palenight t)
+  ;;(load-theme 'doom-gruvbox t)
+  )
 
 
 ;; helm
@@ -187,6 +192,7 @@
   :config
   (helm-mode))
 
+
 (global-set-key (kbd "M-x") 'helm-M-x)
 
 ;; wich key
@@ -199,9 +205,9 @@
   (which-key-mode 1))
 
 (use-package doom-modeline
-      :ensure t
-      :defer t
-      :hook (after-init . doom-modeline-mode))
+  :ensure t
+  :defer t
+  :hook (after-init . doom-modeline-mode))
 
 ;;flycheck
 (use-package flycheck
@@ -237,6 +243,7 @@
 	   "at" '(shell-pop :which-key "open terminal")))
 
 
+
 (defun init-cc-mode ()
   (general-define-key
    :states 'normal
@@ -266,12 +273,6 @@
   (add-hook 'after-init-hook 'global-company-mode))
 
 
-;; (use-package eglot
-;;   :ensure t
-;;   :config
-;;   (add-to-list 'eglot-server-programs
-;; 	       '(go-mode . ("go-langserver" "-mode=stdio" "-gocodecompletion"))))
-
 (use-package company-lsp
   :ensure t
   :config
@@ -296,9 +297,7 @@
   :ensure t
   :config
   (setq elfeed-feeds
-	'("http://planet.emacsen.org/atom.xml"
-	  "https://zhihu.com/rss"))
-  )
+	'("https://zhihu.com/rss")))
 
 (use-package helm-projectile
   :ensure t
@@ -308,11 +307,13 @@
    :states 'normal
    :prefix "SPC"
    "pf" '(helm-projectile-find-file :which-key "project find file")
+   "pg" '(helm-projectile-rg :which-key "project rg grep")
    ))
 
 (use-package json-mode
   :ensure t
   )
+
 (toggle-truncate-lines 1)
 (setq-default truncate-lines t)
 
@@ -401,8 +402,6 @@
 (setq-default org-confirm-babel-evaluate nil)
 
 (setq company-idle-delay 0)
-
-
 (setq default-directory "~/")
 
 
@@ -439,6 +438,14 @@
   :ensure t)
 
 
+(defun kill-other-buffers ()
+    "Kill all other buffers."
+    (interactive)
+    (mapc 'kill-buffer 
+      (delq (current-buffer) 
+        (remove-if-not 'buffer-file-name (buffer-list)))))
+
+
 ;; 设置系统剪切板
 (unless (window-system)
  (defun copy-from-osx ()
@@ -450,6 +457,42 @@
       (process-send-eof proc))))
  (setq interprogram-cut-function 'paste-to-osx)
  (setq interprogram-paste-function 'copy-from-osx))
+
+(defun add-bracket-on-region ()
+  "在region上添加括号."
+  (interactive)
+  (if (region-active-p)
+      (let ((begin (region-beginning))
+	    (end (region-end)))
+	(save-excursion
+	  (goto-char begin)
+	  (insert "(")
+	  (goto-char (+ end 1))
+	  (insert ")")))
+      (error "Not active region")))
+
+(defun eval-form-on-region ()
+  (interactive)
+  (if (region-active-p)
+      (let* ((begin (region-beginning))
+	     (end (region-end))
+	     (input (buffer-substring-no-properties begin end))
+	     )
+	(-as->
+	 (read-minibuffer "enter expression(region text as input var): ")
+	 as
+	 (eval-expression as)
+	 (save-excursion
+	   (goto-char begin)
+	   (delete-region begin end)
+	   (insert as)
+	   )
+	 )
+	)
+      (error "No active region"))
+  )
+
+
 
 (provide 'init-basic)
 ;;; init-basic.el ends here

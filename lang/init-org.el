@@ -18,7 +18,7 @@
   (add-hook 'org-mode-hook 'wf/init-org-mode)
   )
 
-(setq org-hide-emphasis-markers t
+(setq org-hide-emphasis-markers nil
       org-fontify-done-headline t
       org-hide-leading-stars t
       org-pretty-entities t
@@ -43,20 +43,32 @@
 
 (use-package gkroam
   :ensure t
+  :quelpa (gkroam :fetcher github :repo "Kinneyzhang/gkroam")
+  :hook (after-init . gkroam-mode)
   :init
   (setq gkroam-root-dir "~/org/roam/")
+  (setq gkroam-prettify-page-p t
+        gkroam-show-brackets-p t
+        gkroam-use-default-filename t
+        gkroam-window-margin 0)
   :bind
-  (("C-c r G" . gkroam-update-all)
-   ("C-c r g" . gkroam-update)
-   ("C-c r d" . gkroam-daily)
-   ("C-c r f" . gkroam-find)
-   ("C-c r e" . gkroam-edit)
-   ("C-c r n" . gkroam-smart-new)
-   ("C-c r i" . gkroam-insert)
-   ("C-c r I" . gkroam-index)
-   ("C-c r p" . gkroam-preview)
-   ("C-c r v" . gkroam-preview-current)
-   ("C-c r t" . gkroam-toggle-brackets)))
+  (:map gkroam-mode-map
+        (("C-c r I" . gkroam-index)
+         ("C-c r d" . gkroam-daily)
+         ("C-c r f" . gkroam-find)
+         ("C-c r i" . gkroam-insert)
+         ("C-c r c" . gkroam-capture)
+         ("C-c r e" . gkroam-link-edit)
+         ("C-c r n" . gkroam-smart-new)
+         ("C-c r p" . gkroam-toggle-prettify)
+         ("C-c r t" . gkroam-toggle-brackets)
+         ("C-c r R" . gkroam-rebuild-caches)
+         ("C-c r g" . gkroam-update))))
+
+
+(use-package org-ql
+  :quelpa (org-ql :fetcher github :repo "alphapapa/org-ql"))
+
 
 
 (use-package org-bullets
@@ -86,5 +98,41 @@
   ))
 
 
+(setq org-html-head-include-default-style nil)
+
+(setq org-html-scripts "")
+
+(setq org-publish-project-alist
+        '(
+          ;; ... add all the components here (see below)...
+          ("org-notes"
+           :base-directory "~/code/github/guidao.github.io/org/" ;org文件的目录
+           :base-extension "org" ;扩展名
+           :publishing-directory "~/code/github/guidao.github.io/" ;导出目录
+           :html-head "<link rel=\"stylesheet\" type=\"text/css\" href=\"./css/org-css.css\"/>";自定义样式
+	   :html-head-extra "<link rel=\"stylesheet\" type=\"text/css\" href=\"https://unpkg.com/gitalk/dist/gitalk.css\"/> <script src=\"https://unpkg.com/gitalk/dist/gitalk.min.js\"></script>"
+	   :html-postamble "<div id=\"gitalk\" /> <script> var gitalk = new Gitalk({
+  clientID: 'f30e66bb5ab9089aa742',
+  clientSecret: '5d256d445447bd4db16540c2aab0e0884218ed12',
+  repo: 'guidao.github.io',
+  owner: 'guidao',
+  admin: ['guidao'],
+  id: location.pathname,      // Ensure uniqueness and length less than 50
+  distractionFreeMode: false  // Facebook-like distraction free mode
+})
+gitalk.render('gitalk') </script>" 
+           :recursive t
+           :publishing-function org-html-publish-to-html
+           :headline-levels 4             ; Just the default for this project.
+           :auto-preamble t
+           :timestamp nil
+           :author nil
+           )
+          ("org" :components ("org-notes"))
+          ))
+
+(setq org-html-validation-link nil) ; 去掉validation显示
+(setq org-html-link-home "index.html"); 设置home超链接
+(setq org-html-link-up "index.html")
 
 (provide 'init-org)

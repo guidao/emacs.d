@@ -56,6 +56,18 @@
 
 (setq gofmt-command "goimports")
 
+(use-package kubernetes
+  :ensure t
+  :commands (kubernetes-overview))
+
+;; If you want to pull in the Evil compatibility package.
+(use-package kubernetes-evil
+  :ensure t
+  :after kubernetes)
+
+(setq kubernetes-poll-frequency 3600)
+
+(setq kubernetes-redraw-frequency 3600)
 
 (provide 'init-go)
 

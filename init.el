@@ -1,4 +1,5 @@
 (require 'package)
+(setenv "LIBRARY_PATH" "/usr/local/opt/gcc/lib/gcc/10:/usr/local/opt/libgccjit/lib/gcc/10:/usr/local/opt/gcc/lib/gcc/10/gcc/x86_64-apple-darwin20/10.2.0")
 (setq package-archives '(("gnu"   . "http://elpa.emacs-china.org/gnu/")
                          ("melpa" . "http://elpa.emacs-china.org/melpa/")
                          ;;("org" . "https://orgmode.org/elpa/")
@@ -35,6 +36,7 @@
 (require 'valign)
 (require 'company-english-helper)
 
+(require 'wm)
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -53,16 +55,16 @@
  '(lsp-ui-doc-enable nil)
  '(lsp-use-native-json t)
  '(org-babel-python-command "python3")
- '(org-bullets-bullet-list '("◉" "☯" "○" "☯" "✸" "☯" "✿" "☯" "✜" "☯" "◆" "☯" "▶") t)
+ '(org-bullets-bullet-list '("◉" "☯" "○" "☯" "✸" "☯" "✿" "☯" "✜" "☯" "◆" "☯" "▶"))
  '(org-format-latex-options
    '(:foreground default :background default :scale 3.0 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers
 		 ("begin" "$1" "$" "$$" "\\(" "\\[")))
  '(org-startup-with-inline-images t)
  '(package-selected-packages
-   '(company-math org-roam gkroam tao-theme ctable org-bullets htmlize ox-reveal ox-ioslide sis ob-go org-modules pdf-tools helm-rg go-playground vterm evil-org web-mode helm-dash evil-smartparens w3m lispyville lua-mode org-download php-mode ob-ipython elpy python-mode function-args semantic-directory protobuf-mode cargo smartparens smartparens-config company-go deft eyebrowse avy auto-complete hl-todo lsp-haskell json-mode helm-projectile elfeed idris-mode emms emms-setup lsp-ui doom-modeline helm-swoop gotest gotest\.el go-guru exec-path-from-shell go-mode helm helm-ebdb))
+   '(web-beautify anzu rjsx-mode helm-org org-ql ov org-super-agenda ts counsel-projectile kubernetes-evil kubernetes nlinum quelpa-use-package quelpa company-math org-roam gkroam tao-theme ctable org-bullets htmlize ox-reveal ox-ioslide sis ob-go org-modules pdf-tools helm-rg go-playground vterm evil-org web-mode helm-dash evil-smartparens w3m lispyville lua-mode org-download php-mode ob-ipython elpy python-mode function-args semantic-directory protobuf-mode cargo smartparens smartparens-config company-go deft eyebrowse avy auto-complete hl-todo lsp-haskell json-mode helm-projectile elfeed idris-mode emms emms-setup lsp-ui doom-modeline helm-swoop gotest gotest\.el go-guru exec-path-from-shell go-mode helm helm-ebdb))
  '(shell-pop-shell-type '("vterm" "*vterm*" (lambda nil (vterm))))
  '(sp-ignore-modes-list '(minibuffer-inactive-mode protobuf-mode))
- '(warning-suppress-types '((use-package) (bytecomp)))
+ '(warning-suppress-types '((comp) (use-package) (bytecomp)))
  '(xwwp-follow-link-completion-system 'helm t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
