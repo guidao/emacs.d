@@ -110,7 +110,7 @@
            :base-extension "org" ;扩展名
            :publishing-directory "~/code/github/guidao.github.io/" ;导出目录
            :html-head "<link rel=\"stylesheet\" type=\"text/css\" href=\"./css/org-css.css\"/>";自定义样式
-	   :html-head-extra "<link rel=\"stylesheet\" type=\"text/css\" href=\"https://unpkg.com/gitalk/dist/gitalk.css\"/> <script src=\"https://unpkg.com/gitalk/dist/gitalk.min.js\"></script>"
+	   :html-head-extra "<link rel=\"stylesheet\" type=\"text/css\" href=\"./css/gitalk.css\"/> <script src=\"./js/gitalk.min.js\"></script>"
 	   :html-postamble "<div id=\"gitalk\" /> <script> var gitalk = new Gitalk({
   clientID: 'f30e66bb5ab9089aa742',
   clientSecret: '5d256d445447bd4db16540c2aab0e0884218ed12',

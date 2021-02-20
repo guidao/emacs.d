@@ -284,7 +284,12 @@
   (require 'lsp)
   (require 'lsp-clients)
   ;(add-hook 'prog-mode-hook 'lsp)
-  )
+  (general-define-key
+   :states 'normal
+   :prefix "g"
+   "i" '(lsp-find-implementation :which-key "lsp find implement")
+   "r" '(lsp-find-references :which-key "lsp find references")
+   ))
 
 (use-package lsp-ui
   :ensure t
@@ -491,6 +496,14 @@
 	)
       (error "No active region"))
   )
+
+(use-package posframe
+  :ensure t)
+
+
+(when (eq system-type 'darwin)
+  (setq mac-command-modifier 'meta)
+  (setq mac-option-modifier nil))
 
 
 

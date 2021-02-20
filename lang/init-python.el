@@ -45,16 +45,24 @@
 ;;   :init
 ;;   (elpy-enable))
 
-(use-package lsp-python-ms
+(use-package lsp-pyright
   :ensure t
   :hook (python-mode . (lambda ()
-                          (require 'lsp-python-ms)
+                          (require 'lsp-pyright)
 			  (lispy-mode)
 			  (lpy-mode)
-                          (lsp))))
+                          (lsp))))  ; or lsp-deferred
 
-(setq lsp-python-ms-executable
-      "~/code/python/python-language-server/output/bin/Release/Microsoft.Python.LanguageServer")
+;; (use-package lsp-python-ms
+;;   :ensure t
+;;   :hook (python-mode . (lambda ()
+;;                           (require 'lsp-python-ms)
+;; 			  (lispy-mode)
+;; 			  (lpy-mode)
+;;                           (lsp))))
+
+;; (setq lsp-python-ms-executable
+;;       "~/code/python/python-language-server/output/bin/Release/Microsoft.Python.LanguageServer")
     
 
 (setq lispy-key-theme '(c-digit))
@@ -63,7 +71,8 @@
 
 (setq python-shell-interpreter "ipython"
       python-shell-interpreter-args "-i --simple-prompt")
-(setq lsp-python-ms-python-executable-cmd "python3")
+;(setq lsp-python-ms-python-executable-cmd "python3")
+(setq lsp-pyright-python-executable-cmd "python3")
 
 (provide 'init-python)
 
