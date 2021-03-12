@@ -46,7 +46,7 @@
 
 (with-eval-after-load 'evil
   (evil-set-command-property 'godef-jump :jump t)
-  (evil-set-command-property 'helm-gtags-find-tag :jump t)
+  ;(evil-set-command-property 'helm-gtags-find-tag :jump t)
   )
 
 

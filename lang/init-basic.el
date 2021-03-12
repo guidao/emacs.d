@@ -40,7 +40,9 @@
                           `([,(cdr char-regexp) 0 font-shape-gstring]))))
 
 (use-package quelpa
-  :ensure t)
+  :ensure t
+  :config
+  (setq quelpa-update-melpa-p nil))
 
 (use-package quelpa-use-package
   :ensure t
@@ -172,28 +174,28 @@
 
 
 ;; helm
-(use-package helm
-  :ensure t
-  :init
-  (setq-default helm-M-x-fuzzy-match t
-	helm-mode-fuzzy-match t
-	helm-buffers-fuzzy-matching t
-	helm-recentf-fuzzy-match t
-	helm-locate-fuzzy-match t
-	helm-semantic-fuzzy-match t
-	helm-imenu-fuzzy-match t
-	helm-completion-in-region-fuzzy-match t
-	helm-candidate-number-list 150
-	helm-split-window-in-side-p t
-	helm-move-to-line-cycle-in-source t
-	helm-echo-input-in-header-line t
-	helm-autoresize-max-height 0
-	helm-autoresize-min-height 20)
-  :config
-  (helm-mode))
+;; (use-package helm
+;;   :ensure t
+;;   :init
+;;   (setq-default helm-M-x-fuzzy-match t
+;; 	helm-mode-fuzzy-match t
+;; 	helm-buffers-fuzzy-matching t
+;; 	helm-recentf-fuzzy-match t
+;; 	helm-locate-fuzzy-match t
+;; 	helm-semantic-fuzzy-match t
+;; 	helm-imenu-fuzzy-match t
+;; 	helm-completion-in-region-fuzzy-match t
+;; 	helm-candidate-number-list 150
+;; 	helm-split-window-in-side-p t
+;; 	helm-move-to-line-cycle-in-source t
+;; 	helm-echo-input-in-header-line t
+;; 	helm-autoresize-max-height 0
+;; 	helm-autoresize-min-height 20)
+;;   :config
+;;   (helm-mode))
 
 
-(global-set-key (kbd "M-x") 'helm-M-x)
+(global-set-key (kbd "M-x") 'counsel-M-x)
 
 ;; wich key
 (use-package which-key
@@ -223,12 +225,13 @@
 	   :prefix "SPC"
 	   :non-normal-prefix "M-SPC"
 	   "TAB" '(evil-switch-to-windows-last-buffer :which-key "previous buffer")
-	   "SPC" '(helm-M-x :which-key "M-x")
-	   "ff" '(helm-find-files :which-key "find files")
-	   "bb" '(helm-buffers-list :which-key "buffers list")
-	   "kr" '(helm-show-kill-ring :which-key "kill ring")
+	   "SPC" '(counsel-M-x :which-key "M-x")
+	   "ff" '(counsel-find-file :which-key "find files")
+	   "bb" '(ivy-switch-buffer :which-key "buffers list")
+	   ;;"kr" '(helm-show-kill-ring :which-key "kill ring")
 	   "gb" '(pop-tag-mark :which-key "goto back")
-
+	   "pf" '(counsel-projectile-find-file :which-key "project find file")
+	   "pg" '(counsel-projectile-rg :which-key "project rg grep")
 	   "wl" '(windmove-right :which-key "move right")
 	   "wh" '(windmove-left :which-key "move left")
 	   "wk" '(windmove-up :which-key "move up")
@@ -249,7 +252,7 @@
    :states 'normal
    :keymaps 'c-mode-map
    :prefix "SPC"
-   "mgg" '(helm-gtags-find-tag :which-key "goto definition")
+   ;;"mgg" '(helm-gtags-find-tag :which-key "goto definition")
    )
 )
 
@@ -304,16 +307,14 @@
   (setq elfeed-feeds
 	'("https://zhihu.com/rss")))
 
-(use-package helm-projectile
-  :ensure t
-  :config
-  (helm-projectile-on)
-  (general-define-key
-   :states 'normal
-   :prefix "SPC"
-   "pf" '(helm-projectile-find-file :which-key "project find file")
-   "pg" '(helm-projectile-rg :which-key "project rg grep")
-   ))
+;; (use-package helm-projectile
+;;   :ensure t
+;;   :config
+;;   (helm-projectile-on)
+;;   (general-define-key
+;;    :states 'normal
+;;    :prefix "SPC"
+;;       ))
 
 (use-package json-mode
   :ensure t
@@ -378,9 +379,9 @@
   :ensure t
   :config)
 
-(use-package helm-gtags
-  :ensure t
-  :config)
+;; (use-package helm-gtags
+;;   :ensure t
+;;   :config)
 
 
 (defun wf/json-reformat-string ()
@@ -416,21 +417,21 @@
 (use-package xwwp-full
   :load-path "~/.emacs.d/xwwp"
   :custom
-  (xwwp-follow-link-completion-system 'helm)
+  (xwwp-follow-link-completion-system 'ivy)
   :bind (:map xwidget-webkit-mode-map
               ("v" . xwwp-follow-link)
               ("t" . xwwp-ace-toggle)))
 
 
-(use-package helm-dash
-  :ensure t
-  :init
-  (require 'xwwp)
-  :config
-  (setq helm-dash-browser-func 'browse-url)
-  ;(setq helm-dash-browser-func 'xwwp)
-  (mapc 'helm-dash-activate-docset (helm-dash-installed-docsets))
-  )
+;; (use-package helm-dash
+;;   :ensure t
+;;   :init
+;;   (require 'xwwp)
+;;   :config
+;;   (setq helm-dash-browser-func 'browse-url)
+;;   ;(setq helm-dash-browser-func 'xwwp)
+;;   (mapc 'helm-dash-activate-docset (helm-dash-installed-docsets))
+;;   )
 
 
 (use-package vterm
@@ -500,12 +501,33 @@
 (use-package posframe
   :ensure t)
 
+;; (use-package ivy
+;;   :ensure t
+;;   :hook
+;;     (ivy-mode . ivy-posframe-enable)
+;;   :custom-face
+;;     (ivy-posframe ((t (:background "#282a36"))))
+;;     (ivy-posframe-border ((t (:background "#6272a4"))))
+;;     (ivy-posframe-cursor ((t (:background "#61bfff"))))
+;;   :config
+;;   (setq ivy-posframe-font "Latin Modern Mono 14")
+;;   (setq ivy-fixed-height-minibuffer nil
+;;         ivy-posframe-border-width 1 
+;;         ivy-posframe-parameters '((left-fringe . 8) (right-fringe . 8))))
+
+
+
+
+
+
+
+
 
 (when (eq system-type 'darwin)
   (setq mac-command-modifier 'meta)
   (setq mac-option-modifier nil))
 
-
+(require 'aweshell)
 
 (provide 'init-basic)
 ;;; init-basic.el ends here
