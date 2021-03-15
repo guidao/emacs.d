@@ -98,8 +98,11 @@
     (ivy-posframe ((t (:background "#282a36"))))
     (ivy-posframe-border ((t (:background "#6272a4"))))
     (ivy-posframe-cursor ((t (:background "#61bfff"))))
-    :hook
-    (ivy-mode . ivy-posframe-mode))
+    ;:hook
+    ;(ivy-mode . ivy-posframe-mode))
+    :config
+    (ivy-posframe-mode 1)
+    )
 
   ;; More friendly display transformer for Ivy
   (use-package ivy-rich
