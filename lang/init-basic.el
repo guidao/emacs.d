@@ -4,9 +4,10 @@
 
 ;; 设置字体
 (when (window-system)
-  ;(set-frame-font "Fira Code 15")
-  ;;(set-frame-font "iosevka 15")
-  (set-frame-font "Latin Modern Mono 18")
+  ;(set-frame-font "Fira Code 14")
+  ;(set-frame-font "iosevka 15")
+  ;(set-frame-font "Latin Modern Mono 18")
+  (set-frame-font "Victor Mono 15")
   )
 
 (let ((alist '((33 . ".\\(?:\\(?:==\\|!!\\)\\|[!=]\\)")
@@ -230,6 +231,7 @@
 	   "bb" '(ivy-switch-buffer :which-key "buffers list")
 	   ;;"kr" '(helm-show-kill-ring :which-key "kill ring")
 	   "gb" '(pop-tag-mark :which-key "goto back")
+	   "pp" '(er/expand-region :which-key "expand region")
 	   "pf" '(counsel-projectile-find-file :which-key "project find file")
 	   "pg" '(counsel-projectile-rg :which-key "project rg grep")
 	   "wl" '(windmove-right :which-key "move right")
@@ -240,7 +242,7 @@
 	   "w/" '(split-window-right :which-key "split right")
 	   "w-" '(split-window-below :which-key "split bottom")
 	   "wx" '(delete-window :which-key "delete window")
-
+	   "aa" '(org-agenda :which-key "org agenda")
 	   "mgg" '(evil-goto-definition :which-key "goto definition")
 
 	   "at" '(shell-pop :which-key "open terminal")))
@@ -305,7 +307,7 @@
   :ensure t
   :config
   (setq elfeed-feeds
-	'("https://zhihu.com/rss")))
+	'("https://colobu.com/atom.xml")))
 
 ;; (use-package helm-projectile
 ;;   :ensure t
@@ -519,13 +521,26 @@
 
 
 
-
+(use-package pdf-tools
+      :ensure t
+      :config
+      (custom-set-variables
+        '(pdf-tools-handle-upgrades nil)) ; Use brew upgrade pdf-tools instead.
+     (setq pdf-info-epdfinfo-program "/usr/local/bin/epdfinfo"))
 
 
 
 (when (eq system-type 'darwin)
   (setq mac-command-modifier 'meta)
   (setq mac-option-modifier nil))
+
+(use-package crux :ensure t)
+
+(use-package thing-edit
+  :ensure t
+  :quelpa (thing-edit :fetcher github :repo "manateelazycat/thing-edit")
+  )
+
 
 (require 'aweshell)
 

@@ -25,7 +25,7 @@
       org-odd-levels-only t)
 
 (require 'deft)
-(setq org-agenda-files (list deft-directory))
+(setq org-agenda-files (list deft-directory "~/org/wiki" "~/org/wiki/daily"))
 (setq org-default-notes-file (concat deft-directory "todo.org"))
 (setq org-image-actual-width nil)
 (setq org-todo-keywords
@@ -41,33 +41,33 @@
 (require 'ox-ioslide-helper)
 (setq org-startup-indented t)
 
-(use-package gkroam
-  :ensure t
-  :quelpa (gkroam :fetcher github :repo "Kinneyzhang/gkroam")
-  :hook (after-init . gkroam-mode)
-  :init
-  (setq gkroam-root-dir "~/org/roam/")
-  (setq gkroam-prettify-page-p t
-        gkroam-show-brackets-p t
-        gkroam-use-default-filename t
-        gkroam-window-margin 0)
-  :bind
-  (:map gkroam-mode-map
-        (("C-c r I" . gkroam-index)
-         ("C-c r d" . gkroam-daily)
-         ("C-c r f" . gkroam-find)
-         ("C-c r i" . gkroam-insert)
-         ("C-c r c" . gkroam-capture)
-         ("C-c r e" . gkroam-link-edit)
-         ("C-c r n" . gkroam-smart-new)
-         ("C-c r p" . gkroam-toggle-prettify)
-         ("C-c r t" . gkroam-toggle-brackets)
-         ("C-c r R" . gkroam-rebuild-caches)
-         ("C-c r g" . gkroam-update))))
+;; (use-package gkroam
+;;   :ensure t
+;;   :quelpa (gkroam :fetcher github :repo "Kinneyzhang/gkroam")
+;;   :hook (after-init . gkroam-mode)
+;;   :init
+;;   (setq gkroam-root-dir "~/org/roam/")
+;;   (setq gkroam-prettify-page-p t
+;;         gkroam-show-brackets-p t
+;;         gkroam-use-default-filename t
+;;         gkroam-window-margin 0)
+;;   :bind
+;;   (:map gkroam-mode-map
+;;         (("C-c r I" . gkroam-index)
+;;          ("C-c r d" . gkroam-daily)
+;;          ("C-c r f" . gkroam-find)
+;;          ("C-c r i" . gkroam-insert)
+;;          ("C-c r c" . gkroam-capture)
+;;          ("C-c r e" . gkroam-link-edit)
+;;          ("C-c r n" . gkroam-smart-new)
+;;          ("C-c r p" . gkroam-toggle-prettify)
+;;          ("C-c r t" . gkroam-toggle-brackets)
+;;          ("C-c r R" . gkroam-rebuild-caches)
+;;          ("C-c r g" . gkroam-update))))
 
 
-(use-package org-ql
-  :quelpa (org-ql :fetcher github :repo "alphapapa/org-ql"))
+;; (use-package org-ql
+;;   :quelpa (org-ql :fetcher github :repo "alphapapa/org-ql"))
 
 
 
@@ -134,5 +134,21 @@ gitalk.render('gitalk') </script>"
 (setq org-html-validation-link nil) ; 去掉validation显示
 (setq org-html-link-home "index.html"); 设置home超链接
 (setq org-html-link-up "index.html")
+
+
+(use-package org-roam
+      :ensure t
+      :quelpa (org-roam :fetcher github :repo "org-roam/org-roam")
+      :hook
+      (after-init . org-roam-mode)
+      :custom
+      (org-roam-directory "~/org/wiki")
+      :bind (:map org-roam-mode-map
+              (("C-c n l" . org-roam)
+               ("C-c n f" . org-roam-find-file)
+               ("C-c n g" . org-roam-graph))
+              :map org-mode-map
+              (("C-c n i" . org-roam-insert))
+              (("C-c n I" . org-roam-insert-immediate))))
 
 (provide 'init-org)
