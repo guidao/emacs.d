@@ -242,9 +242,9 @@
 	   "w/" '(split-window-right :which-key "split right")
 	   "w-" '(split-window-below :which-key "split bottom")
 	   "wx" '(delete-window :which-key "delete window")
-	   "aa" '(org-agenda :which-key "org agenda")
+	   "oa" '(org-agenda :which-key "org agenda")
 	   "mgg" '(evil-goto-definition :which-key "goto definition")
-
+	   "yi" '(yas-insert-snippet :which-key "insert yasnippet")
 	   "at" '(shell-pop :which-key "open terminal")))
 
 
@@ -307,7 +307,7 @@
   :ensure t
   :config
   (setq elfeed-feeds
-	'("https://colobu.com/atom.xml")))
+	'("https://colobu.com/atom.xml" "https://www.reddit.com/r/emacs/.rss")))
 
 ;; (use-package helm-projectile
 ;;   :ensure t
@@ -541,6 +541,44 @@
   :quelpa (thing-edit :fetcher github :repo "manateelazycat/thing-edit")
   )
 
+(use-package ivy-prescient
+  :ensure t
+  :config
+  (ivy-prescient-mode))
+
+
+
+(use-package company-restclient
+  :ensure t
+  :config
+  (require 'cl)
+  )
+
+
+(use-package restclient
+  :ensure t
+  :config
+  (add-hook 'restclient-mode-hook (lambda ()
+				    (setq tab-width 4)
+				    (make-local-variable 'company-backends)
+				    (add-to-list 'company-backends 'company-restclient)
+				    )
+	    )
+  )
+
+(defun my/make-form-data (f)
+  (let ((bound "------WebKitFormBoundaryubgSIWS4VA1aur41"))
+    (--> f (-map (lambda (tuple)
+	    (format "%s\nContent-Disposition: form-data; name=\"%s\"\n\n%s" bound (car tuple) (cdr tuple))
+	    )
+	      it)
+       (s-join "\n" it)
+       (s-concat it "\n" bound "--")
+       )
+    )
+  )
+
+(setq content-form-data "multipart/form-data; boundary=----WebKitFormBoundaryubgSIWS4VA1aur41")
 
 (require 'aweshell)
 
