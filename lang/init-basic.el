@@ -580,6 +580,16 @@
 
 (setq content-form-data "multipart/form-data; boundary=----WebKitFormBoundaryubgSIWS4VA1aur41")
 
+(use-package xwwp-full
+  :ensure t
+  :custom
+  (xwwp-follow-link-completion-system 'ivy)
+  :bind (:map xwidget-webkit-mode-map
+              ("v" . xwwp-follow-link)
+	      ("t" . xwwp-ace-toggle)))
+
+(require 'dired-x)
+
 (require 'aweshell)
 
 (provide 'init-basic)
