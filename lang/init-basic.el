@@ -307,7 +307,9 @@
   :ensure t
   :config
   (setq elfeed-feeds
-	'("https://colobu.com/atom.xml" "https://www.reddit.com/r/emacs/.rss")))
+	'("https://colobu.com/atom.xml"
+	  "https://www.reddit.com/r/emacs/.rss"))
+)
 
 ;; (use-package helm-projectile
 ;;   :ensure t
@@ -587,6 +589,36 @@
   :bind (:map xwidget-webkit-mode-map
               ("v" . xwwp-follow-link)
 	      ("t" . xwwp-ace-toggle)))
+
+(quelpa '(eaf :fetcher github
+              :repo  "manateelazycat/emacs-application-framework"
+              :files ("*")))
+
+(use-package eaf
+  :init
+  (use-package epc :defer t :ensure t)
+  (use-package ctable :defer t :ensure t)
+  (use-package deferred :defer t :ensure t)
+  (use-package s :defer t :ensure t)
+  :custom
+  (eaf-browser-continue-where-left-off t)
+  :config
+  (eaf-setq eaf-browser-enable-adblocker "true")
+  (eaf-bind-key scroll_up "C-n" eaf-pdf-viewer-keybinding)
+  (eaf-bind-key scroll_down "C-p" eaf-pdf-viewer-keybinding)
+  (eaf-bind-key take_photo "p" eaf-camera-keybinding)
+  (eaf-bind-key nil "M-q" eaf-browser-keybinding))
+
+
+(setq lsp-sqls-connections
+    '(((driver . "mysql") (dataSourceName . "hae:qt=EEHKq+{2.JSNh@tcp(172.18.1.119:35003)/hae-test"))))
+
+(add-to-list 'display-buffer-alist
+               '("\\*sqls results\\*"
+                 (display-buffer-reuse-window display-buffer-at-bottom)
+                 (reusable-frames . visible)
+                 (window-height . 0.3)))
+
 
 (require 'dired-x)
 

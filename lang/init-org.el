@@ -22,7 +22,7 @@
       org-fontify-done-headline t
       org-hide-leading-stars t
       org-pretty-entities t
-      org-odd-levels-only t)
+      org-odd-levels-only nil)
 
 (require 'deft)
 (setq org-agenda-files (list deft-directory "~/org/wiki" "~/org/wiki/daily"))
