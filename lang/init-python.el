@@ -17,25 +17,25 @@
   :config
   )
 
-(use-package ob-ipython
-  :ensure t
-  :config)
+;(use-package ob-ipython
+;  :ensure t
+;  :config)
 
-(use-package ob-go
-  :ensure t)
+;(use-package ob-go
+;  :ensure t)
 
 
-(use-package lpy
-  :ensure t
-  :config)
+;(use-package lpy
+;  :ensure t
+;  :config)
 
 
 ;;ein notebook
-(use-package ein
-  :ensure t
-  :config
-  (add-hook 'ein:connect-mode-hook 'jedi:setup)
-  )
+;(use-package ein
+;  :ensure t
+;  :config
+;  (add-hook 'ein:connect-mode-hook 'jedi:setup)
+;  )
 
 
 (setq-default ein:use-auto-complete-superpack t)
@@ -45,13 +45,13 @@
 ;;   :init
 ;;   (elpy-enable))
 
-(use-package lsp-pyright
-  :ensure t
-  :hook (python-mode . (lambda ()
-                          (require 'lsp-pyright)
-			  (lispy-mode)
-			  (lpy-mode)
-                          (lsp))))  ; or lsp-deferred
+;(use-package lsp-pyright
+;  :ensure t
+;  :hook (python-mode . (lambda ()
+;                          (require 'lsp-pyright)
+;			  (lispy-mode)
+;			  (lpy-mode)
+;                          (lsp))))  ; or lsp-deferred
 
 ;; (use-package lsp-python-ms
 ;;   :ensure t
@@ -65,8 +65,8 @@
 ;;       "~/code/python/python-language-server/output/bin/Release/Microsoft.Python.LanguageServer")
     
 
-(setq lispy-key-theme '(c-digit))
-(lispy-set-key-theme lispy-key-theme)
+;(setq lispy-key-theme '(c-digit))
+;(lispy-set-key-theme lispy-key-theme)
 
 
 (setq python-shell-interpreter "ipython"

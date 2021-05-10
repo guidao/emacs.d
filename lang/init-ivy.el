@@ -78,12 +78,15 @@
       (setq magit-completing-read-function 'ivy-completing-read))
 
     ;; Enhance fuzzy matching
-    (use-package flx)
+    (use-package flx :ensure t)
     ;; Enhance M-x
-    (use-package amx)
+    (use-package amx :ensure t)
     ;; Ivy integration for Projectile
     (use-package counsel-projectile
-      :config (counsel-projectile-mode 1))
+      :ensure t
+      :config
+      (setq counsel-projectile-rg-initial-input '(ivy-thing-at-point))
+      (counsel-projectile-mode 1))
 
   ;; Show ivy frame using posframe
   (use-package ivy-posframe
@@ -93,7 +96,7 @@
     (ivy-posframe-parameters
       '((left-fringe . 5)
         (right-fringe . 5)))
-    (ivy-posframe-font "Latin Modern Mono 14")
+    ;(ivy-posframe-font "Victor Mono 15")
     :custom-face
     (ivy-posframe ((t (:background "#282a36"))))
     (ivy-posframe-border ((t (:background "#6272a4"))))
@@ -278,7 +281,11 @@
     (setq ivy-rich-parse-remote-buffer nil)
     :config
     (ivy-rich-mode 1))
-)
+
+  (use-package ivy-prescient
+    :ensure t
+    :config
+    (ivy-prescient-mode)))
 
 
 (provide 'init-ivy)

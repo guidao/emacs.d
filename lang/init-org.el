@@ -1,33 +1,36 @@
+;;; Code: 
 
-
-(defun wf/init-org-mode ()
-  "Init org mode."
-  (general-define-key
+(general-define-key
    :states '(normal)
    :keymaps 'org-mode-map
    :prefix "SPC"
    "ii" '(org-toggle-inline-images :which-key "toggle inline image"))
-  (require 'ox-reveal))
-
 
 
 (use-package org
   :ensure t
   :config
-  (add-hook 'org-mode-hook 'valign-mode)
-  (add-hook 'org-mode-hook 'wf/init-org-mode)
-  )
+  ;; 笔记管理
+  (use-package deft
+    :ensure t
+    :config
+    (setq deft-extensions '("org" "txt" "md" "markdown" "text"))
+    (setq deft-default-extension "org"))
 
-(setq org-hide-emphasis-markers nil
+  (add-hook 'org-mode-hook 'valign-mode)
+  ;; 设置图片宽度为屏幕的三分之一
+  (setq org-image-actual-width (list (/ (display-pixel-width) 3)))
+  (setq org-hide-emphasis-markers nil
       org-fontify-done-headline t
       org-hide-leading-stars t
-      org-pretty-entities t
+      org-pretty-entities nil
       org-odd-levels-only nil)
+  
+  (setq org-startup-indented t)
+  (setq org-default-notes-file (concat deft-directory "todo.org"))
+  (setq org-agenda-files '(deft-directory "~/org/wiki" "~/org/wiki/daily")))
 
-(require 'deft)
-(setq org-agenda-files (list deft-directory "~/org/wiki" "~/org/wiki/daily"))
-(setq org-default-notes-file (concat deft-directory "todo.org"))
-(setq org-image-actual-width nil)
+
 (setq org-todo-keywords
       (quote ((sequence "TODO" "|" "DONE(!)" "CANCEL(!)"))))
 
@@ -38,37 +41,7 @@
 
 
 (require 'org-tempo)
-(require 'ox-ioslide-helper)
-(setq org-startup-indented t)
-
-;; (use-package gkroam
-;;   :ensure t
-;;   :quelpa (gkroam :fetcher github :repo "Kinneyzhang/gkroam")
-;;   :hook (after-init . gkroam-mode)
-;;   :init
-;;   (setq gkroam-root-dir "~/org/roam/")
-;;   (setq gkroam-prettify-page-p t
-;;         gkroam-show-brackets-p t
-;;         gkroam-use-default-filename t
-;;         gkroam-window-margin 0)
-;;   :bind
-;;   (:map gkroam-mode-map
-;;         (("C-c r I" . gkroam-index)
-;;          ("C-c r d" . gkroam-daily)
-;;          ("C-c r f" . gkroam-find)
-;;          ("C-c r i" . gkroam-insert)
-;;          ("C-c r c" . gkroam-capture)
-;;          ("C-c r e" . gkroam-link-edit)
-;;          ("C-c r n" . gkroam-smart-new)
-;;          ("C-c r p" . gkroam-toggle-prettify)
-;;          ("C-c r t" . gkroam-toggle-brackets)
-;;          ("C-c r R" . gkroam-rebuild-caches)
-;;          ("C-c r g" . gkroam-update))))
-
-
-;; (use-package org-ql
-;;   :quelpa (org-ql :fetcher github :repo "alphapapa/org-ql"))
-
+;(require 'ox-ioslide-helper)
 
 
 (use-package org-bullets
@@ -86,15 +59,31 @@
                            (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "◦"))))))
 
 
+;; (defun format-timestamp (format str)
+;;   (message "%s" str)
+;;   "0000"
+;;   )
+
+
+;; (font-lock-add-keywords 'org-mode
+;;                         '(("\\[timestamp:\\(.*\\)\\]"
+;;                            (0
+;; 			    (prog1 ()
+;; 			      (compose-region (match-beginning 1) (match-end 1) "hello"))))))
+
+
+
+
+
 (setq org-plantuml-jar-path "/usr/local/Cellar/plantuml/1.2020.16/libexec/plantuml.jar")
 
 
 (org-babel-do-load-languages
 'org-babel-load-languages
-'((ipython . t)
-  (python . t)
-  (go . t)
-  (plantuml . t)
+'(;(ipython . t)
+  ;(python . t)
+  ;(go . t)
+  ;(plantuml . t)
   ))
 
 

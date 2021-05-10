@@ -34,8 +34,7 @@
    "muj" '(go-guru-definition :which-key "guru definition")
    "mui" '(go-guru-implements :which-key "guru implementation")
    "mu<" '(go-guru-callers :which-key "guru callers")
-   "mu>" '(go-guru-callees :which-key "guru callees")
-   )
+   "mu>" '(go-guru-callees :which-key "guru callees"))
   (setenv "GO111MODULE" "on")
   (push 'go-golint flycheck-disabled-checkers)
   (setq tab-width 4))
@@ -50,24 +49,10 @@
   )
 
 
-(setq go-packages-function
-      (lambda ()
-	(sort (process-lines "gopkgs" "-workDir" ".") #'string<)))
+(setq go-packages-function (lambda () 
+  (sort (process-lines "gopkgs" "-workDir" ".") #'string<)))
 
 (setq gofmt-command "goimports")
-
-(use-package kubernetes
-  :ensure t
-  :commands (kubernetes-overview))
-
-;; If you want to pull in the Evil compatibility package.
-(use-package kubernetes-evil
-  :ensure t
-  :after kubernetes)
-
-(setq kubernetes-poll-frequency 3600)
-
-(setq kubernetes-redraw-frequency 3600)
 
 (provide 'init-go)
 
