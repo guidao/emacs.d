@@ -69,8 +69,9 @@
 ;(lispy-set-key-theme lispy-key-theme)
 
 
-(setq python-shell-interpreter "ipython"
-      python-shell-interpreter-args "-i --simple-prompt")
+(setq python-shell-interpreter "ipython")
+(setq python-shell-interpreter-args "--simple-prompt -i")
+
 ;(setq lsp-python-ms-python-executable-cmd "python3")
 (setq lsp-pyright-python-executable-cmd "python3")
 

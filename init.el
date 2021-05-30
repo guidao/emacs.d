@@ -48,6 +48,8 @@
 (require 'init-python)
 ;(require 'ra-emacs-lsp)
 (require 'valign)
+(require 'init-meow)
+
 
 (require 'wm)
 (custom-set-variables
@@ -91,14 +93,14 @@
  '(lsp-ui-doc-enable nil)
  '(lsp-use-native-json t)
  '(org-babel-python-command "python3")
- '(org-bullets-bullet-list '("◉" "☯" "○" "☯" "✸" "☯" "✿" "☯" "✜" "☯" "◆" "☯" "▶"))
+ '(org-bullets-bullet-list '("◉" "☯" "○" "☯" "✸" "☯" "✿" "☯" "✜" "☯" "◆" "☯" "▶") t)
  '(org-format-latex-options
    '(:foreground default :background default :scale 3.0 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers
 		 ("begin" "$1" "$" "$$" "\\(" "\\[")))
  '(org-roam-directory "~/org/wiki")
  '(org-startup-with-inline-images t)
  '(package-selected-packages
-   '(shrface dot-mode datetime datetime-format elisp-format amx flx spaceline-all-the-icons all-the-icons-ivy gnu-elpa-keyring-update lsp-mode ivy-rich ivy-posframe epc eaf xwwp-follow-link-ivy keyfreq ivy-prescient company-restclient know-your-http-well restclient expand-region thing-edit crux aweshell multiple-cursors evil-mc posframe web-beautify anzu rjsx-mode helm-org org-ql ov org-super-agenda ts counsel-projectile kubernetes-evil kubernetes nlinum quelpa-use-package quelpa company-math org-roam gkroam tao-theme ctable org-bullets htmlize ox-reveal ox-ioslide sis ob-go org-modules pdf-tools helm-rg go-playground vterm evil-org web-mode helm-dash evil-smartparens w3m lispyville lua-mode org-download php-mode ob-ipython elpy python-mode function-args semantic-directory protobuf-mode cargo smartparens smartparens-config company-go deft eyebrowse avy auto-complete hl-todo lsp-haskell json-mode helm-projectile elfeed idris-mode emms emms-setup lsp-ui doom-modeline helm-swoop gotest gotest\.el go-guru exec-path-from-shell go-mode helm helm-ebdb))
+   '(paredit better-jumper meow boon good-scroll iscroll shrface dot-mode datetime datetime-format elisp-format amx flx spaceline-all-the-icons all-the-icons-ivy gnu-elpa-keyring-update lsp-mode ivy-rich ivy-posframe epc eaf xwwp-follow-link-ivy keyfreq ivy-prescient company-restclient know-your-http-well restclient expand-region thing-edit crux aweshell multiple-cursors evil-mc posframe web-beautify anzu rjsx-mode helm-org org-ql ov org-super-agenda ts counsel-projectile kubernetes-evil kubernetes nlinum quelpa-use-package quelpa company-math org-roam gkroam tao-theme ctable org-bullets htmlize ox-reveal ox-ioslide sis ob-go org-modules pdf-tools helm-rg go-playground vterm evil-org web-mode helm-dash evil-smartparens w3m lispyville lua-mode org-download php-mode ob-ipython elpy python-mode function-args semantic-directory protobuf-mode cargo smartparens smartparens-config company-go deft eyebrowse avy auto-complete hl-todo lsp-haskell json-mode helm-projectile elfeed idris-mode emms emms-setup lsp-ui doom-modeline helm-swoop gotest gotest\.el go-guru exec-path-from-shell go-mode helm helm-ebdb))
  '(pdf-tools-handle-upgrades nil)
  '(shell-pop-shell-type '("vterm" "*vterm*" (lambda nil (vterm))))
  '(sp-ignore-modes-list '(minibuffer-inactive-mode protobuf-mode))

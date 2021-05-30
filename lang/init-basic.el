@@ -113,17 +113,19 @@
   (yas-global-mode 1))
 
 ;; evil mode
-(use-package evil
-  :ensure t
-  :config
-  (evil-mode 1))
+;; (use-package evil
+;;   :ensure t
+;;   :config
+;;   ;(evil-mode 1)
+;;   )
 
-(use-package evil-escape
-   :ensure t
-   :init
-   (setq-default evil-escape-key-sequence "jk")
-   :config
-   (evil-escape-mode 1))
+;; (use-package evil-escape
+;;    :ensure t
+;;    :init
+;;    (setq-default evil-escape-key-sequence "jk")
+;;    :config
+;;    ;(evil-escape-mode 1)
+;;    )
 
 ;; theme
 (use-package doom-themes
@@ -133,8 +135,6 @@
   (load-theme 'doom-palenight t)
   ;;(load-theme 'doom-gruvbox t)
   )
-
-
 
 (global-set-key (kbd "M-x") 'counsel-M-x)
 
@@ -161,30 +161,30 @@
 ;; keybinding
 (use-package general :ensure t)
 
-(general-define-key
-	   :states '(normal visual insert emacs)
-	   :prefix "SPC"
-	   :non-normal-prefix "M-SPC"
-	   "TAB" '(evil-switch-to-windows-last-buffer :which-key "previous buffer")
-	   "SPC" '(counsel-M-x :which-key "M-x")
-	   "ff" '(counsel-find-file :which-key "find files")
-	   "bb" '(ivy-switch-buffer :which-key "buffers list")
-	   "gb" '(pop-tag-mark :which-key "goto back")
-	   "pp" '(er/expand-region :which-key "expand region")
-	   "pf" '(counsel-projectile-find-file :which-key "project find file")
-	   "pg" '(counsel-projectile-rg :which-key "project rg grep")
-	   "wl" '(windmove-right :which-key "move right")
-	   "wh" '(windmove-left :which-key "move left")
-	   "wk" '(windmove-up :which-key "move up")
-	   "wj" '(windmove-down :which-key "move bottom")
-	   "ww" '(other-window :which-key "switch window")
-	   "w/" '(split-window-right :which-key "split right")
-	   "w-" '(split-window-below :which-key "split bottom")
-	   "wx" '(delete-window :which-key "delete window")
-	   "oa" '(org-agenda :which-key "org agenda")
-	   "mgg" '(evil-goto-definition :which-key "goto definition")
-	   "yi" '(yas-insert-snippet :which-key "insert yasnippet")
-	   "at" '(shell-pop :which-key "open terminal"))
+;; (general-define-key
+;; 	   :states '(normal visual insert emacs)
+;; 	   :prefix "SPC"
+;; 	   :non-normal-prefix "M-SPC"
+;; 	   "TAB" '(evil-switch-to-windows-last-buffer :which-key "previous buffer")
+;; 	   "SPC" '(counsel-M-x :which-key "M-x")
+;; 	   "ff" '(counsel-find-file :which-key "find files")
+;; 	   "bb" '(ivy-switch-buffer :which-key "buffers list")
+;; 	   "gb" '(pop-tag-mark :which-key "goto back")
+;; 	   "pp" '(er/expand-region :which-key "expand region")
+;; 	   "pf" '(counsel-projectile-find-file :which-key "project find file")
+;; 	   "pg" '(counsel-projectile-rg :which-key "project rg grep")
+;; 	   "wl" '(windmove-right :which-key "move right")
+;; 	   "wh" '(windmove-left :which-key "move left")
+;; 	   "wk" '(windmove-up :which-key "move up")
+;; 	   "wj" '(windmove-down :which-key "move bottom")
+;; 	   "ww" '(other-window :which-key "switch window")
+;; 	   "w/" '(split-window-right :which-key "split right")
+;; 	   "w-" '(split-window-below :which-key "split bottom")
+;; 	   "wx" '(delete-window :which-key "delete window")
+;; 	   "oa" '(org-agenda :which-key "org agenda")
+;; 	   "mgg" '(evil-goto-definition :which-key "goto definition")
+;; 	   "yi" '(yas-insert-snippet :which-key "insert yasnippet")
+;; 	   "at" '(shell-pop :which-key "open terminal"))
 
 ;; project
 (use-package projectile
@@ -202,29 +202,10 @@
   (add-hook 'after-init-hook 'global-company-mode))
 
 
-(use-package company-lsp
- :ensure t
- :config
- (push 'company-lsp company-backends))
-
 (use-package lsp-mode
  :ensure t
  :config
- (require 'lsp)
- ;(require 'lsp-clients)
-  ;(add-hook 'prog-mode-hook 'lsp)
- (general-define-key
-  :states 'normal
-  :prefix "g"
-  "i" '(lsp-find-implementation :which-key "lsp find implement")
-  "r" '(lsp-find-references :which-key "lsp find references")
-  ))
-
-; (use-package lsp-ui
-;  :ensure t
-;  :config
-;  (add-hook 'lsp-mode-hook 'lsp-ui-mode)
-;  )
+ (require 'lsp))
 
 
 (use-package elfeed
@@ -253,15 +234,15 @@
 (use-package avy
   :ensure t
   :config
-  (general-define-key
-   :states 'normal
-   :prefix "g"
-   "l" '(avy-goto-line :which-key "goto line")
-   "c" '(avy-goto-char :which-key "goto char")
-   "w" '(avy-goto-word-or-subword-1 :which-key "goto word")
-   "a" '(beginning-of-defun :which-key "goto begin of defun")
-   "e" '(end-of-defun :which-key "goto end of defun")
-   ))
+  ;; (general-define-key
+  ;;  :states 'normal
+  ;;  :prefix "g"
+  ;;  "l" '(avy-goto-line :which-key "goto line")
+  ;;  "c" '(avy-goto-char :which-key "goto char")
+  ;;  "w" '(avy-goto-word-or-subword-1 :which-key "goto word")
+  ;;  "a" '(beginning-of-defun :which-key "goto begin of defun")
+  ;;  "e" '(end-of-defun :which-key "goto end of defun")
+   )
 
 
 (use-package so-long
@@ -476,8 +457,8 @@
    ;;"com.apple.keylayout.US"
 
    ;; Other language input source: "rime", "sogou" or another one.
-    "im.rime.inputmethod.Squirrel.Rime"
-    ;"com.sogou.inputmethod.sogou.pinyin"
+    ;"im.rime.inputmethod.Squirrel.Rime"
+   "com.sogou.inputmethod.sogou.pinyin"
     )
   ;; enable the /cursor color/ mode
   (sis-global-cursor-color-mode t)

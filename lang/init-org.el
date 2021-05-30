@@ -1,5 +1,8 @@
 ;;; Code: 
 
+
+(require 'ts)
+
 (general-define-key
    :states '(normal)
    :keymaps 'org-mode-map
@@ -28,7 +31,12 @@
   
   (setq org-startup-indented t)
   (setq org-default-notes-file (concat deft-directory "todo.org"))
-  (setq org-agenda-files '(deft-directory "~/org/wiki" "~/org/wiki/daily")))
+  (setq org-agenda-files `("~/org/wiki" "~/org/wiki/daily" ,deft-directory))
+  (setq org-refile-use-outline-path 'file)
+  (setq org-outline-path-complete-in-steps nil)
+  (setq org-refile-allow-creating-parent-nodes 'confirm)
+  (setq org-refile-targets '((org-agenda-files :maxlevel . 3))))
+
 
 
 (setq org-todo-keywords
@@ -40,8 +48,12 @@
 	      ("DONE" :foreground "forest green" :weight bold))))
 
 
+
+
+
 (require 'org-tempo)
-;(require 'ox-ioslide-helper)
+
+(use-package ox-reveal :ensure t)
 
 
 (use-package org-bullets
@@ -80,8 +92,8 @@
 
 (org-babel-do-load-languages
 'org-babel-load-languages
-'(;(ipython . t)
-  ;(python . t)
+'((ipython . t)
+  (python . t)
   ;(go . t)
   ;(plantuml . t)
   ))
@@ -139,5 +151,80 @@ gitalk.render('gitalk') </script>"
               :map org-mode-map
               (("C-c n i" . org-roam-insert))
               (("C-c n I" . org-roam-insert-immediate))))
+
+
+(setq org-capture-templates
+      '(("t" "todo" plain (file "~/.deft/todo.org")
+         "* TODO %?\n%U\n" :clock-in t :clock-resume t)))
+
+(defun my/smart-capture-task ()
+  "Capture a task."
+  (interactive)
+  (org-capture nil "t"))
+
+
+
+(defconst my/agenda-cmd-refile
+  '(tags
+    "REFILE"
+    ((org-agenda-overriding-header "To refile")
+     (org-tags-match-list-sublevels nil))))
+
+(defconst my/agenda-cmd-today
+  '(agenda
+    ""
+    ((org-agenda-span 'week)
+     (org-agenda-sorting-strategy '(habit-down
+                                    time-up
+                                    category-keep
+                                    todo-state-down
+                                    priority-down)))))
+
+
+(setq org-agenda-custom-commands
+      `((" " "Agenda for capture todo"
+	 (,my/agenda-cmd-refile
+	  ,my/agenda-cmd-today)
+	 )))
+
+(use-package org-ql
+  :ensure t
+  :quelpa (org-ql :fetcher github :repo "alphapapa/org-ql"
+            :files (:defaults (:exclude "helm-org-ql.el"))))
+
+(setq org-super-agenda-groups
+      '((:name "待排期"
+	       :time-grid t
+	       :tag "REFILE")
+	(:name "待办"
+	       :time-grid t
+	       :and (:todo "TODO" :not (:tag "suspend")))
+	(:name "已完成"
+	       :time-grid t
+	       :todo "DONE")
+	(:name "已取消"
+	       :time-grid t
+	       :todo "CANCEL")
+	(:name "挂起"
+	       :time-grid t
+	       :todo "TODO"
+	       :tag "suspend")))
+
+(defun my/this-week-item ()
+  (interactive)
+  (let* ((ts (ts-now))
+         (beg-of-week (->> ts
+                           (ts-adjust 'day (- (ts-dow (ts-now))))
+                           (ts-apply :hour 0 :minute 0 :second 0)))
+         (end-of-week (->> ts
+                           (ts-adjust 'day (- 6 (ts-dow (ts-now))))
+                           (ts-apply :hour 23 :minute 59 :second 59))))
+    (org-ql-search (org-agenda-files)
+      `(or (and (ts :from ,beg-of-week :to ,end-of-week) (todo "DONE" "CANCEL")) (todo "TODO"))
+      :title "This week"
+      :super-groups 'org-super-agenda-groups
+      :sort '(priority date))))
+
+
 
 (provide 'init-org)
