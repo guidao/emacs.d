@@ -2,6 +2,9 @@
 ;;; Commentary:
 ;;; Code:
 
+(require 'emacro)
+
+
 ;; 设置字体
 (when (window-system)
   ;(set-frame-font "Fira Code 14")
@@ -132,8 +135,9 @@
   :ensure t
   :config
   ;;(load-theme 'doom-molokai t)
-  (load-theme 'doom-palenight t)
+  ;;(load-theme 'doom-palenight t)
   ;;(load-theme 'doom-gruvbox t)
+  (load-theme 'doom-nord t)
   )
 
 (global-set-key (kbd "M-x") 'counsel-M-x)
@@ -214,6 +218,7 @@
   (setq elfeed-feeds
 	'("https://colobu.com/atom.xml"
 	  "https://sachachua.com/blog/category/emacs/feed/"
+	  "https://cprss.s3.amazonaws.com/golangweekly.com.xml"
 	  "https://www.reddit.com/r/emacs/.rss"))
 )
 
@@ -499,7 +504,50 @@
                  (window-height . 0.3)))
 
 
+(use-package emacro
+  :ensure t
+  :quelpa (emacro :fetcher github :repo "guidao/emacro")
+  )
+
+
 (require 'dired-x)
+
+(defun my/smart-jumper-advice (orig-fn &rest args)
+    "Set a jump point and ensure ORIG-FN doesn't set any new jump points."
+    (better-jumper-set-jump (if (markerp (car args)) (car args)))
+    (let ((better-jumper--jumping t))
+      (apply orig-fn args)))
+
+
+(use-package better-jumper
+  :ensure t
+  :config
+  (better-jumper-mode +1)
+  (advice-add #'xref-push-marker-stack :around #'my/smart-jumper-advice))
+
+
+(use-package shrface
+  :ensure t
+  :defer t
+  :config
+  (shrface-basic)
+  (shrface-trial)
+  (shrface-default-keybindings) ; setup default keybindings
+  (setq shrface-href-versatile t))
+
+(use-package eww
+  :defer t
+  :init
+  (add-hook 'eww-after-render-hook #'shrface-mode)
+  :config
+  (require 'shrface))
+
+
+(use-package counsel-dash
+  :ensure t
+  :config
+  (setq counsel-dash-browser-func 'eww))
+
 
 
 (provide 'init-basic)

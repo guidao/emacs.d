@@ -3,12 +3,6 @@
 
 (require 'ts)
 
-(general-define-key
-   :states '(normal)
-   :keymaps 'org-mode-map
-   :prefix "SPC"
-   "ii" '(org-toggle-inline-images :which-key "toggle inline image"))
-
 
 (use-package org
   :ensure t
@@ -20,7 +14,11 @@
     (setq deft-extensions '("org" "txt" "md" "markdown" "text"))
     (setq deft-default-extension "org"))
 
-  (add-hook 'org-mode-hook 'valign-mode)
+  (use-package valign
+    :ensure t
+    :config
+    (add-hook 'org-mode-hook 'valign-mode))
+  
   ;; 设置图片宽度为屏幕的三分之一
   (setq org-image-actual-width (list (/ (display-pixel-width) 3)))
   (setq org-hide-emphasis-markers nil
@@ -89,10 +87,16 @@
 
 (setq org-plantuml-jar-path "/usr/local/Cellar/plantuml/1.2020.16/libexec/plantuml.jar")
 
+(use-package ein
+  :ensure t
+  :quelpa (ein :fetcher github :repo "millejoh/emacs-ipython-notebook" :files ("lisp/*"))
+  )
 
 (org-babel-do-load-languages
 'org-babel-load-languages
-'((ipython . t)
+'(
+  (ein . t)
+  ;;(ipython . t)
   (python . t)
   ;(go . t)
   ;(plantuml . t)
@@ -226,5 +230,7 @@ gitalk.render('gitalk') </script>"
       :sort '(priority date))))
 
 
+(use-package ox-gfm
+  :ensure t)
 
 (provide 'init-org)

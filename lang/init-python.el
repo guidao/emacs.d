@@ -75,6 +75,12 @@
 ;(setq lsp-python-ms-python-executable-cmd "python3")
 (setq lsp-pyright-python-executable-cmd "python3")
 
+(use-package lsp-pyright
+  :ensure t
+  :hook (python-mode . (lambda ()
+                          (require 'lsp-pyright)
+                          (lsp))))
+
 (provide 'init-python)
 
 ;;; init-python.el ends here

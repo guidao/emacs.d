@@ -63,6 +63,8 @@
    '("oo" . my/this-week-item)
    '("oc" . my/smart-capture-task)
    '("at" . vterm)
+   '("eo" . emacro-start)
+   '("ep" . emacro-apply-to-region-lines)
    ;; Use SPC (0-9) for digit arguments.
    '("1" . meow-digit-argument)
    '("2" . meow-digit-argument)
@@ -77,7 +79,8 @@
    '("/" . meow-keypad-describe-key)
    '("?" . meow-cheatsheet))
   (meow-normal-define-key
-   '("C-o" . pop-global-mark)
+   '("C-o" . better-jumper-jump-backward)
+   '("C-i" . better-jumper-jump-forward)
    '(":" . my/smart-vim-command)
    '("gg" . meow-begin-of-buffer)
    '("gc" . avy-goto-char)
@@ -114,7 +117,7 @@
    '("f" . meow-find-expand)
    '("F" . meow-find)
    '("q" . my/smart-cancel)
-   '("G" . meow-grab)
+   '("G" . meow-end-of-buffer)
    '("h" . meow-left)
    '("H" . meow-left-expand)
    '("i" . meow-insert)
